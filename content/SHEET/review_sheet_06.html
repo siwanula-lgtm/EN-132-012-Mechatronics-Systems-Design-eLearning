@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Sheet 06 - การเขียนโปรแกรมควบคุม</title>
+<link rel="stylesheet" href="sheet.css">
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ พิมพ์ / บันทึก PDF</button></div>
+<div class="page">
+
+  <div class="sheet-header">
+    <div>
+      <div class="title">📡 Review Sheet หน่วยที่ 6 — การเขียนโปรแกรมควบคุม</div>
+      <div class="sub">EN-132-012 Mechatronics Systems Design · Control Programming</div>
+    </div>
+    <div class="meta">
+      สัปดาห์ที่ 10–12 · ท 6 / ป 9 ชม. · CLO2, CLO3<br>
+      ใบงานปฏิบัติ 1 ใบงาน
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="col">
+      <div class="section">
+        <div class="section-header"><span class="icon">📌</span> 1. สาระสำคัญ</div>
+        <div class="section-body">
+          <p>การเขียนโปรแกรมควบคุมคือการกำหนดขั้นตอนให้ตัวควบคุมอ่านค่าจากเซนเซอร์ ตัดสินใจ และสั่งแอคชูเอเตอร์ ภาษาที่ใช้ขึ้นกับแพลตฟอร์ม Python เหมาะกับพีซีสำหรับเก็บข้อมูลและทดสอบอัลกอริทึม Arduino C++ ทำงานบนไมโครคอนโทรลเลอร์ที่สั่งงานขาโดยตรง ด้วย PWM และ ADC Visual Basic ใช้สร้างหน้าจอควบคุมบน Windows แบบเหตุการณ์ และ PLC ใช้แลดเดอร์ที่ทำงานเป็นรอบสแกนในงานอุตสาหกรรม ทั้งสี่แบบสื่อสารกันด้วยพอร์ตอนุกรม (8N1) หรือสัญญาณ I/O และการเลือกอัลกอริทึม เช่น ON/OFF, P และ PI มีผลต่อความแม่นยำของระบบ (Shetty &amp; Kolk, 2011)</p>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="icon">🎯</span> 2. จุดประสงค์การเรียน (ทั่วไป)</div>
+        <div class="section-body">
+          <ul class="mini"><li>6.1 เข้าใจหลักการและโครงสร้างของโปรแกรมควบคุมในภาษา Python, Arduino, Visual</li><li>6.2 เขียนโปรแกรมควบคุมอุปกรณ์อินพุต-เอาต์พุตและสื่อสารกับตัวควบคุมได้</li><li>6.3 เลือกภาษาและตัวควบคุมให้เหมาะกับงาน และปฏิบัติงานอย่างปลอดภัย</li></ul>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="icon">🧩</span> 3. หัวข้อเนื้อหาในหน่วย</div>
+        <div class="section-body">
+          <ul class="mini"><li>6.1 ภาพรวมการเขียนโปรแกรมควบคุม</li><li>6.2 Python สำหรับงานควบคุม</li><li>6.3 Arduino (ESP32)</li><li>6.4 Visual Basic</li><li>6.5 อัลกอริทึมควบคุมเบื้องต้น</li><li>6.6 PLC และภาษาแลดเดอร์</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="section">
+        <div class="section-header"><span class="icon">📝</span> 4. บทสรุป</div>
+        <div class="section-body">
+          <p>การเขียนโปรแกรมควบคุมคือการกำหนดขั้นตอนให้ตัวควบคุมอ่านค่าจากเซนเซอร์ ตัดสินใจ และสั่งแอคชูเอเตอร์ ภาษาที่ใช้ขึ้นกับแพลตฟอร์ม Python เหมาะกับพีซีสำหรับเก็บข้อมูลและทดสอบอัลกอริทึม Arduino C++ ทำงานบนไมโครคอนโทรลเลอร์ที่สั่งงานขาโดยตรง ด้วย PWM และ ADC Visual Basic ใช้สร้างหน้าจอควบคุมบน Windows แบบเหตุการณ์ และ PLC ใช้แลดเดอร์ที่ทำงานเป็นรอบสแกนในงานอุตสาหกรรม ทั้งสี่แบบสื่อสารกันด้วยพอร์ตอนุกรม (8N1) หรือสัญญาณ I/O และการเลือกอัลกอริทึม เช่น ON/OFF, P และ PI มีผลต่อความแม่นยำของระบบ (Shetty &amp; Kolk, 2011)</p>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="icon">❓</span> 5. คำถามทบทวน (จากแบบฝึกหัดท้ายหน่วย)</div>
+        <div class="section-body">
+          <ul class="mini"><li>เปรียบเทียบภาษา Python, Arduino C++, Visual Basic และแลดเดอร์ (PLC) ในด้านแพลตฟอร์มที่ใช้ …</li><li>การสื่อสารอนุกรม 9,600 baud แบบ 8N1 ส่งได้สูงสุดกี่ไบต์ต่อวินาที และที่ 115,200 baud ส่งข้อความ 100 …</li><li>ESP32 ใช้ PWM 8 บิต ต้องการดิวตี้ 40% และแรงดันเฉลี่ยที่แหล่งจ่าย 3.3 V จงหาค่าที่ส่งให้ ledcWrite …</li><li>ESP32 อ่านค่า ADC 12 บิตได้ 3,000 (อ้างอิง 3.3 V) จงหาแรงดันที่ขา และเขียนนิพจน์ Python แปลงค่า ADC (0–4095) …</li><li>เขียนสมการลอจิกและอธิบายวงจรซีลอินสำหรับ Exp6: กด SW PBG (X3) แล้วปล่อย LAMP G (Y1) ติดค้าง กด SW PBY (X4) …</li><li>อธิบายการทำงานของ Exp10 (Timer &amp; Self-holding): กด X3 ค้าง 5 วินาที LAMP G ติดค้าง กด X4 แล้วดับ …</li></ul>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="icon">🔧</span> 6. เชื่อมโยงกับใบงานปฏิบัติหน่วยเรียนที่ 6</div>
+        <div class="section-body">
+          <p><span class="accent">การเขียนโปรแกรมควบคุมด้วย ESP32 (Arduino),</span><br>เวลาปฏิบัติ 9 ชั่วโมง · ทำแบบทดสอบหลังเรียนหน่วยที่ 6 หลังทบทวน</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">EN-132-012 การออกแบบระบบเมคคาทรอนิกส์ · อาจารย์ศิวณุ เหล่าบุตรสา · สาขาวิชาวิศวกรรมเครื่องกลและเมคคาทรอนิกส์ มหาวิทยาลัยกาฬสินธุ์ · ภาคการศึกษาที่ 2/2568</div>
+</div>
+</body>
+</html>

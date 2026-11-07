@@ -1,0 +1,8 @@
+services:
+  mechatronics-elearning:
+    build: .
+    image: en-132-012-mechatronics-elearning:latest
+    container_name: en-132-012-mechatronics-elearning
+    ports:
+      - "8040:3000"
+    restart: unless-stopped

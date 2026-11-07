@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Sheet 07 - การเชื่อมโยงและสื่อสารระหว่างอุปกรณ์</title>
+<link rel="stylesheet" href="sheet.css">
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ พิมพ์ / บันทึก PDF</button></div>
+<div class="page">
+
+  <div class="sheet-header">
+    <div>
+      <div class="title">📡 Review Sheet หน่วยที่ 7 — การเชื่อมโยงและสื่อสารระหว่างอุปกรณ์</div>
+      <div class="sub">EN-132-012 Mechatronics Systems Design · Device Connectivity and Communication</div>
+    </div>
+    <div class="meta">
+      สัปดาห์ที่ 13 · ท 2 / ป 3 ชม. · CLO2, CLO3<br>
+      ใบงานปฏิบัติ 1 ใบงาน
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="col">
+      <div class="section">
+        <div class="section-header"><span class="icon">📌</span> 1. สาระสำคัญ</div>
+        <div class="section-body">
+          <p>ระบบเมคคาทรอนิกส์ประกอบด้วยตัวควบคุม เซนเซอร์ แอคชูเอเตอร์ และคอมพิวเตอร์หลายตัวที่ต้องแลกเปลี่ยนข้อมูลกัน การสื่อสารแบบอนุกรมส่งข้อมูลทีละบิตบนสายจำนวนน้อย ซึ่งมีหลายมาตรฐาน เช่น RS-232 (จุดต่อจุด ระยะสั้น) RS-485 (ดิฟเฟอเรนเชียล มัลติดรอป ระยะไกล) และ USB/USB Type-C (ต่อพ่วงและจ่ายไฟ) ส่วนโปรโตคอล Modbus กำหนดรูปแบบเฟรม แอดเดรส ฟังก์ชัน และการตรวจ CRC เพื่อให้มาสเตอร์สอบถามสเลฟได้ทั้งบนสายอนุกรม (RTU) และ Ethernet (TCP) การเลือกมาตรฐานให้เหมาะกับระยะ จำนวนโหนด และสภาพแวดล้อม รวมถึงตั้งค่าบอดเรต พาริตี …</p>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="icon">🎯</span> 2. จุดประสงค์การเรียน (ทั่วไป)</div>
+        <div class="section-body">
+          <ul class="mini"><li>7.1 เข้าใจหลักการสื่อสารอนุกรมและคุณลักษณะของ USB, USB Type-C, RS-232 และ</li><li>7.2 เข้าใจโครงสร้างเฟรม Modbus RTU/TCP และคำนวณ CRC-16 ได้</li><li>7.3 เชื่อมต่อ ESP32 และ PLC กับพีซีและเลือกมาตรฐานให้เหมาะกับงานอย่างปลอดภัย</li></ul>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="icon">🧩</span> 3. หัวข้อเนื้อหาในหน่วย</div>
+        <div class="section-body">
+          <ul class="mini"><li>7.1 พื้นฐานการสื่อสารข้อมูล</li><li>7.2 USB และ USB Type-C</li><li>7.3 RS-232</li><li>7.4 RS-485</li><li>7.5 โปรโตคอล Modbus RTU</li><li>7.6 Modbus TCP และการเลือกอินเทอร์เฟซ</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="section">
+        <div class="section-header"><span class="icon">📝</span> 4. บทสรุป</div>
+        <div class="section-body">
+          <p>ระบบเมคคาทรอนิกส์ประกอบด้วยตัวควบคุม เซนเซอร์ แอคชูเอเตอร์ และคอมพิวเตอร์หลายตัวที่ต้องแลกเปลี่ยนข้อมูลกัน การสื่อสารแบบอนุกรมส่งข้อมูลทีละบิตบนสายจำนวนน้อย ซึ่งมีหลายมาตรฐาน เช่น RS-232 (จุดต่อจุด ระยะสั้น) RS-485 (ดิฟเฟอเรนเชียล มัลติดรอป ระยะไกล) และ USB/USB Type-C (ต่อพ่วงและจ่ายไฟ) ส่วนโปรโตคอล Modbus กำหนดรูปแบบเฟรม แอดเดรส ฟังก์ชัน และการตรวจ CRC เพื่อให้มาสเตอร์สอบถามสเลฟได้ทั้งบนสายอนุกรม (RTU) และ Ethernet (TCP) การเลือกมาตรฐานให้เหมาะกับระยะ จำนวนโหนด และสภาพแวดล้อม รวมถึงตั้งค่าบอดเรต พาริตี และแอดเดรสให้ตรงกัน เป็นหัวใจของการเชื่อมโยงอุปกรณ์ (Bishop, 2007; Mitsubishi Electric, 2023)</p>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="icon">❓</span> 5. คำถามทบทวน (จากแบบฝึกหัดท้ายหน่วย)</div>
+        <div class="section-body">
+          <ul class="mini"><li>เปรียบเทียบ RS-232 กับ RS-485 ในด้านชนิดสัญญาณ จำนวนโหนด และระยะทาง</li><li>ข้อมูล 1 ไบต์รูปแบบ 8N1 ที่ 115,200 baud ใช้เวลาเท่าใด และส่งสูงสุดได้กี่ไบต์ต่อวินาที</li><li>ที่ 19,200 baud รูปแบบ 8E1 (11 บิตต่ออักขระ) ส่งอักขระ 1 ตัวใช้เวลาเท่าใด และส่งเฟรมคำขอ 8 ไบต์ใช้เวลาเท่าใด</li><li>จงอธิบายหน้าที่ของ CRC ใน Modbus RTU และเหตุใดจึงต้องส่งไบต์ต่ำก่อน</li><li>คำนวณกำลังสูงสุดที่ USB-C ส่งได้ที่ 9 V 3 A, 15 V 3 A และ 20 V 5 A และสายแบบใดจึงรองรับ 5 A</li><li>ESP32 DevKit ติดต่อกับพีซีผ่าน USB ได้อย่างไร ทั้งที่ UART เป็นสัญญาณ 3.3 V</li></ul>
+        </div>
+      </div>
+      <div class="section warn">
+        <div class="section-header"><span class="icon">⚠️</span> ข้อควรระวังด้านความปลอดภัย (ใบงานปฏิบัติ)</div>
+        <div class="section-body">
+          <ul class="mini"><li>เพื่อให้ผู้เรียนปฏิบัติงานตามกฎความปลอดภัยทางไฟฟ้า</li></ul>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="icon">🔧</span> 6. เชื่อมโยงกับใบงานปฏิบัติหน่วยเรียนที่ 7</div>
+        <div class="section-body">
+          <p><span class="accent">การสื่อสาร Modbus RTU ระหว่างพีซี ESP32 และ PLC</span><br>เวลาปฏิบัติ 3 ชั่วโมง · ทำแบบทดสอบหลังเรียนหน่วยที่ 7 หลังทบทวน</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">EN-132-012 การออกแบบระบบเมคคาทรอนิกส์ · อาจารย์ศิวณุ เหล่าบุตรสา · สาขาวิชาวิศวกรรมเครื่องกลและเมคคาทรอนิกส์ มหาวิทยาลัยกาฬสินธุ์ · ภาคการศึกษาที่ 2/2568</div>
+</div>
+</body>
+</html>
