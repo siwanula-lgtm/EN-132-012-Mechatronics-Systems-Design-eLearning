@@ -103,15 +103,16 @@ DataReceived
 
 ![ภาพที่ 6.18 ใบงาน Exp1: การต่อวงจรอินพุต](/images/book/m12_image121.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 6.19 ใบงาน Exp1: การต่อวงจรเอาต์พุต](/images/book/m12_image122.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 6.20 ใบงาน Exp1: โปรแกรมแลดเดอร์ใน GX Works3](/images/book/m12_image123.png)
 
-ที่มา: ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical
+LP)
 
 1\. ต่อปุ่ม SW PBG, PBY, PBR เข้า X3, X4, X5 และหลอดไฟเข้า Y1, Y3, Y4 ตามภาพที่
 6.18–6.19 (อินพุตแบบ Sink: S/S ต่อ +24 V)
@@ -122,7 +123,8 @@ DataReceived
 
 ![ภาพที่ 6.21 ใบงาน Exp6: โปรแกรมแลดเดอร์ซีลอิน](/images/book/m12_image124.png)
 
-ที่มา: ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical
+LP)
 
 ใช้การต่อสายเดียวกับ Exp1 (ภาพที่ 6.18–6.19) เขียนแลดเดอร์ตามภาพที่ 6.21
 ทดสอบและบันทึกผลตารางที่ 6.7
@@ -132,15 +134,16 @@ DataReceived
 
 ![ภาพที่ 6.22 ใบงาน Timer & Self-holding: การต่อวงจรอินพุต](/images/book/m12_image125.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 6.23 ใบงาน Timer & Self-holding: การต่อวงจรเอาต์พุต](/images/book/m12_image126.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 6.24 ใบงาน Timer & Self-holding: โปรแกรมแลดเดอร์](/images/book/m12_image127.png)
 
-ที่มา: ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical
+LP)
 
 หมายเหตุ: ภาพต้นฉบับแสดงค่าไทเมอร์ T0 K15 แต่โจทย์กำหนดเวลา 5 วินาที ให้ตั้ง K50
 (หน่วย 100 ms) ตามโจทย์ และตรวจหน่วยของไทเมอร์ใน GX Works3 ของชุดฝึกก่อนใช้งาน
@@ -150,15 +153,16 @@ DataReceived
 
 ![ภาพที่ 6.25 ใบงาน Counter: การต่อวงจรอินพุต](/images/book/m12_image128.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 6.26 ใบงาน Counter: การต่อวงจรเอาต์พุต](/images/book/m12_image129.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 6.27 ใบงาน Counter: โปรแกรมแลดเดอร์](/images/book/m12_image130.png)
 
-ที่มา: ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical
+LP)
 
 เขียนแลดเดอร์ตามภาพที่ 6.27 ทดสอบกด X3 ครบ 10 ครั้ง และกด X4 เพื่อรีเซ็ต
 บันทึกผลตารางที่ 6.7
@@ -185,7 +189,7 @@ ledcWrite(LED_PIN, duty).</p>
 <p>const int PWM_CH = 0, PWM_FREQ = 5000, PWM_BITS = 8; // duty range
 0..255</p>
 <p>String line = ""; // receive buffer</p>
-<p>void setup() {</p>
+<p>void setup {</p>
 <p>Serial.begin(115200);</p>
 <p>pinMode(BTN_PIN, INPUT_PULLUP);</p>
 <p>ledcSetup(PWM_CH, PWM_FREQ, PWM_BITS);</p>
@@ -193,13 +197,13 @@ ledcWrite(LED_PIN, duty).</p>
 <p>Serial.println("READY");</p>
 <p>}</p>
 <p>void handle(String cmd) { // one command per line</p>
-<p>cmd.trim();</p>
+<p>cmd.trim;</p>
 <p>if (cmd == "L1") { ledcWrite(PWM_CH, 255); Serial.println("OK
 LED=1"); }</p>
 <p>else if (cmd == "L0") { ledcWrite(PWM_CH, 0); Serial.println("OK
 LED=0"); }</p>
 <p>else if (cmd.startsWith("P")) { // P&lt;0..255&gt;</p>
-<p>int d = constrain(cmd.substring(1).toInt(), 0, 255);</p>
+<p>int d = constrain(cmd.substring(1).toInt, 0, 255);</p>
 <p>ledcWrite(PWM_CH, d);</p>
 <p>Serial.print("OK PWM="); Serial.println(d);</p>
 <p>}</p>
@@ -213,9 +217,9 @@ Serial.println(" V)");</p>
 "BTN=1" : "BTN=0"); }</p>
 <p>else { Serial.println("ERR unknown command"); }</p>
 <p>}</p>
-<p>void loop() {</p>
-<p>while (Serial.available()) {</p>
-<p>char c = Serial.read();</p>
+<p>void loop {</p>
+<p>while (Serial.available) {</p>
+<p>char c = Serial.read;</p>
 <p>if (c == '\n') { handle(line); line = ""; } // end of command</p>
 <p>else if (c != '\r') { line += c; }</p>
 <p>}</p>
@@ -242,21 +246,21 @@ pyserial)</p>
 <p>def send(port, text):</p>
 <p>"""Send one command line and return the first reply line."""</p>
 <p>port.write((text + "\n").encode("ascii")) # commands end with LF</p>
-<p>return port.readline().decode("ascii", "ignore").strip()</p>
-<p>def main():</p>
+<p>return port.readline.decode("ascii", "ignore").strip</p>
+<p>def main:</p>
 <p>name = sys.argv[1] if len(sys.argv) &gt; 1 else "COM3"</p>
 <p>with serial.Serial(name, 115200, timeout=1) as port:</p>
 <p>time.sleep(2) # ESP32 resets when the port opens</p>
-<p>port.reset_input_buffer()</p>
+<p>port.reset_input_buffer</p>
 <p>print("Connected", name, "@115200")</p>
 <p>while True:</p>
-<p>cmd = input("cmd&gt; ").strip()</p>
+<p>cmd = input("cmd&gt; ").strip</p>
 <p>if cmd in ("exit", "quit"):</p>
 <p>break</p>
 <p>if cmd:</p>
 <p>print(send(port, cmd))</p>
 <p>if __name__ == "__main__":</p>
-<p>main()</p></th>
+<p>main</p></th>
 </tr>
 </thead>
 <tbody>
@@ -324,11 +328,10 @@ final 43.00 °C, PI final 45.00 °C
 serial sketch</p>
 <p>Imports System.IO.Ports</p>
 <p>Public Class Form1</p>
-<p>Private WithEvents sp As New SerialPort()</p>
+<p>Private WithEvents sp As New SerialPort</p>
 <p>Private Sub Form1_Load(sender As Object, e As EventArgs) Handles
 MyBase.Load</p>
-<p>cboPort.Items.AddRange(SerialPort.GetPortNames()) ' list COM
-ports</p>
+<p>cboPort.Items.AddRange(SerialPort.GetPortNames) ' list COM ports</p>
 <p>If cboPort.Items.Count &gt; 0 Then cboPort.SelectedIndex = 0</p>
 <p>tbDuty.Minimum = 0 : tbDuty.Maximum = 255 ' PWM range</p>
 <p>Timer1.Interval = 500 : Timer1.Enabled = False</p>
@@ -336,11 +339,11 @@ ports</p>
 <p>Private Sub btnConnect_Click(sender As Object, e As EventArgs)
 Handles btnConnect.Click</p>
 <p>If sp.IsOpen Then</p>
-<p>Timer1.Enabled = False : sp.Close() : btnConnect.Text = "Connect"</p>
+<p>Timer1.Enabled = False : sp.Close : btnConnect.Text = "Connect"</p>
 <p>Else</p>
 <p>sp.PortName = cboPort.Text : sp.BaudRate = 115200</p>
 <p>sp.NewLine = vbLf ' sketch replies end with LF</p>
-<p>sp.Open() : btnConnect.Text = "Disconnect"</p>
+<p>sp.Open : btnConnect.Text = "Disconnect"</p>
 <p>Timer1.Enabled = True ' poll the potentiometer</p>
 <p>End If</p>
 <p>End Sub</p>
@@ -366,16 +369,15 @@ Timer1.Tick</p>
 <p>Private Sub sp_DataReceived(sender As Object, e As
 SerialDataReceivedEventArgs) Handles sp.DataReceived</p>
 <p>Try</p>
-<p>Dim msg As String = sp.ReadLine().Trim() ' runs on a worker
-thread</p>
-<p>Me.BeginInvoke(Sub() lblAdc.Text = msg) ' update UI on the UI
+<p>Dim msg As String = sp.ReadLine.Trim ' runs on a worker thread</p>
+<p>Me.BeginInvoke(Sub lblAdc.Text = msg) ' update UI on the UI
 thread</p>
 <p>Catch ex As Exception</p>
 <p>End Try</p>
 <p>End Sub</p>
 <p>Private Sub Form1_FormClosing(sender As Object, e As
 FormClosingEventArgs) Handles MyBase.FormClosing</p>
-<p>If sp.IsOpen Then sp.Close()</p>
+<p>If sp.IsOpen Then sp.Close</p>
 <p>End Sub</p>
 <p>End Class</p></th>
 </tr>

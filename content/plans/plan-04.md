@@ -79,7 +79,7 @@
 \- เอกสารประกอบการสอน ใบความรู้ ใบงาน และแบบฝึกหัด หน่วยที่ 4
 
 \- เอกสาร Sensor and Transducer (EN-132-003) และ Shetty & Kolk (2011)
-จากโฟลเดอร์ Data และใบงาน Workshop PLC ใบที่ 12, 13, 15
+และใบงาน Workshop PLC ใบที่ 12, 13, 15
 
 ### สื่อโสตทัศนูปกรณ์
 
@@ -152,20 +152,20 @@ SI). Cengage Learning. (ISBN 978-1-4390-6199-2)
 | 4.6      | การหาตำแหน่งและความเร็วจากเอนโค้ดเดอร์                 | ผู้จัดทำ (ภาพประกอบต้นฉบับ)                                                                    |
 | 4.7      | พร็อกซิมิตีแบบเหนี่ยวนำและค่าปรับแก้                        | ผู้จัดทำ (ภาพประกอบต้นฉบับ อ้างอิงแนวคิดจาก Mechatronic Engineering of KSU, 2025; ค่า k เป็นค่าทั่วไป) |
 | 4.8      | พร็อกซิมิตีแบบความจุ                                    | ผู้จัดทำ (ภาพประกอบต้นฉบับ อ้างอิงแนวคิดจาก Mechatronic Engineering of KSU, 2025)                 |
-| 4.9      | พร็อกซิมิตีแบบความจุ (ภาพถ่ายและแผนภาพหลักการ)            | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
+| 4.9      | พร็อกซิมิตีแบบความจุ (ภาพถ่ายและแผนภาพหลักการ)            | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
 | 4.10     | การต่อเซนเซอร์ NPN/PNP กับอินพุต Sink/Source            | ผู้จัดทำ (ภาพประกอบต้นฉบับ อ้างอิงแนวคิดจาก Mitsubishi Electric, 2023)                            |
 | 4.11     | โฟโตอิเล็กทริก 3 ชนิด                                  | ผู้จัดทำ (ภาพประกอบต้นฉบับ)                                                                    |
-| 4.12     | การติดตั้งโฟโตอิเล็กทริกกับสายพาน                         | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
-| 4.13     | เซนเซอร์สะท้อน E18 และการปรับระยะ                     | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
+| 4.12     | การติดตั้งโฟโตอิเล็กทริกกับสายพาน                         | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
+| 4.13     | เซนเซอร์สะท้อน E18 และการปรับระยะ                     | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
 | 4.14     | เซนเซอร์ใยแก้วนำแสง                                  | ผู้จัดทำ (ภาพประกอบต้นฉบับ อ้างอิงแนวคิดจาก Bishop, 2007)                                         |
 | 4.15     | การเลือกเซนเซอร์ตามงาน                               | ผู้จัดทำ (สรุปจากเนื้อหาหน่วย)                                                                   |
-| 4.16     | ใบงาน Exp12: การต่อ Proximity เข้า X6                | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
-| 4.17     | ใบงาน Exp12: การต่อเอาต์พุตหลอดไฟ                     | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
-| 4.18     | ใบงาน Exp13: การต่อ Photoelectric เข้า X7            | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
-| 4.19     | ใบงาน Exp13: โปรแกรมแลดเดอร์ใน GX Works3            | ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)                                           |
-| 4.20     | ใบงาน Exp15: การต่อ Proximity, Photoelectric และ X3 | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
-| 4.21     | ใบงาน Exp15: การต่อเอาต์พุตมอเตอร์ DC ผ่านรีเลย์ Y6/Y7    | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
-| 4.22     | ใบงาน Exp15: โปรแกรมแลดเดอร์ใน GX Works3            | ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)                                           |
+| 4.16     | ใบงาน Exp12: การต่อ Proximity เข้า X6                | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
+| 4.17     | ใบงาน Exp12: การต่อเอาต์พุตหลอดไฟ                     | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
+| 4.18     | ใบงาน Exp13: การต่อ Photoelectric เข้า X7            | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
+| 4.19     | ใบงาน Exp13: โปรแกรมแลดเดอร์ใน GX Works3            | ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                    |
+| 4.20     | ใบงาน Exp15: การต่อ Proximity, Photoelectric และ X3 | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
+| 4.21     | ใบงาน Exp15: การต่อเอาต์พุตมอเตอร์ DC ผ่านรีเลย์ Y6/Y7    | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
+| 4.22     | ใบงาน Exp15: โปรแกรมแลดเดอร์ใน GX Works3            | ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                    |
 
 ### กิจกรรมเสนอแนะ
 
@@ -251,7 +251,7 @@ ed., SI). Cengage Learning. (ISBN 978-1-4390-6199-2)</p></td>
 <td><p>1. สื่อสิ่งพิมพ์</p>
 <p>2. เอกสารประกอบการสอน ใบความรู้ ใบงาน และแบบฝึกหัด หน่วยที่ 4</p>
 <p>3. เอกสาร Sensor and Transducer (EN-132-003) และ Shetty &amp; Kolk
-(2011) จากโฟลเดอร์ Data และใบงาน Workshop PLC ใบที่ 12, 13, 15</p></td>
+(2011) และใบงาน Workshop PLC ใบที่ 12, 13, 15</p></td>
 </tr>
 <tr class="odd">
 <td>วัสดุโสตทัศน์</td>

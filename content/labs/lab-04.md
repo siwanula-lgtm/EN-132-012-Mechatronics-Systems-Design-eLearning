@@ -49,11 +49,11 @@ X7 ของ FX5U แบบ Sink ได้ถูกต้อง
 
 ![ภาพที่ 4.16 ใบงาน Exp12: การต่อ Proximity เข้า X6](/images/book/m12_image66.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 4.17 ใบงาน Exp12: การต่อเอาต์พุตหลอดไฟ](/images/book/m12_image67.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 1\. ต่อ S/S เข้า +24V เซนเซอร์สาย + เข้า +24V สาย − เข้า 0V และสายสัญญาณเข้า X6
 ตามภาพที่ 4.16 ต่อหลอดไฟที่เอาต์พุต Y1 ตามภาพที่ 4.17
@@ -68,11 +68,12 @@ X7 ของ FX5U แบบ Sink ได้ถูกต้อง
 
 ![ภาพที่ 4.18 ใบงาน Exp13: การต่อ Photoelectric เข้า X7](/images/book/m12_image68.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 4.19 ใบงาน Exp13: โปรแกรมแลดเดอร์ใน GX Works3](/images/book/m12_image69.png)
 
-ที่มา: ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical
+LP)
 
 1\. ต่อสัญญาณจากโฟโตอิเล็กทริก (สายดำ) เข้า X7 ตามภาพที่ 4.18 เขียนแลดเดอร์ให้ X7
 สั่ง Y1 ตามภาพที่ 4.19 (ป้ายกำกับ PHOTO/OUT)
@@ -86,15 +87,16 @@ X7 ของ FX5U แบบ Sink ได้ถูกต้อง
 
 ![ภาพที่ 4.20 ใบงาน Exp15: การต่อ Proximity, Photoelectric และ X3](/images/book/m12_image70.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 4.21 ใบงาน Exp15: การต่อเอาต์พุตมอเตอร์ DC ผ่านรีเลย์ Y6/Y7](/images/book/m12_image71.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 4.22 ใบงาน Exp15: โปรแกรมแลดเดอร์ใน GX Works3](/images/book/m12_image72.png)
 
-ที่มา: ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical
+LP)
 
 1\. ต่อ X3 (ปุ่ม SW PBG แบบ NC) X6 (Proximity) X7 (Photoelectric) ตามภาพที่
 4.20 และต่อรีเลย์ R1/R2 กับ Y6/Y7 และมอเตอร์ ตามภาพที่ 4.21

@@ -74,7 +74,7 @@ TB6600 ตามแผนผัง OUTPUT WIRING DIAGRAM ของชุดฝ�
 
 ![ภาพที่ 2.13 OUTPUT WIRING DIAGRAM ของสเต็ปปิ้งมอเตอร์ (TB6600) ในชุดฝึก](/images/book/m12_image30.png)
 
-ที่มา: ภาพจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 ### 4. โปรแกรมแลดเดอร์สมบูรณ์พร้อมคำอธิบาย (GX Works3)
 
@@ -107,7 +107,8 @@ Instruction List (IL)</p>
 
 ![ภาพที่ 2.14 โปรแกรมแลดเดอร์ใน GX Works3 สำหรับการทดลองมอเตอร์ DC (ตัวอย่างจากชุดฝึก)](/images/book/m12_image31.png)
 
-ที่มา: ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical
+LP)
 
 ตอน ข: โปรแกรมควบคุมสเต็ปปิ้งมอเตอร์ด้วย DPLSV (กด SW PBG ค้าง มอเตอร์หมุน CW ที่
 10,000 Hz, กด SW PBY ค้าง มอเตอร์หมุน CCW ที่ 10,000 Hz, ปล่อยปุ่มมอเตอร์หยุด)
@@ -141,7 +142,8 @@ flag</p>
 
 ![ภาพที่ 2.15 โปรแกรมแลดเดอร์ใน GX Works3 สำหรับการทดลองสเต็ปปิ้งมอเตอร์ (DPLSV) (ตัวอย่างจากชุดฝึก)](/images/book/m12_image32.png)
 
-ที่มา: ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical
+LP)
 
 ### 5. ขั้นตอนการตั้งค่า GX Works3 และการตรวจสอบการทำงาน
 

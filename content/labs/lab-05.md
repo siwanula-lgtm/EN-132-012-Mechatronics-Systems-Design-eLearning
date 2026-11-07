@@ -47,13 +47,11 @@ EXT) นิวแมติกส์ (Exp2 แมนนวลผ่าน PLC แ
 
 ![ภาพที่ 5.15 การต่อมอเตอร์ AC เข้ากับอินเวอร์เตอร์](/images/book/m12_image89.png)
 
-ที่มา: เอกสารอินเวอร์เตอร์ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ
-URL ต้นทาง)
+ที่มา: เอกสารอินเวอร์เตอร์ Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 5.16 การต่อสวิตช์สั่งงานโหมด EXT ของอินเวอร์เตอร์ E-820](/images/book/m12_image90.png)
 
-ที่มา: เอกสารอินเวอร์เตอร์ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ
-URL ต้นทาง)
+ที่มา: เอกสารอินเวอร์เตอร์ Workshop PLC (Konlatee Design Mechanical LP)
 
 1\. ต่อมอเตอร์ AC เข้าขั้ว U, V, W และสายดิน ตามภาพที่ 5.15 ให้ผู้สอนตรวจ
 
@@ -70,17 +68,16 @@ URL ต้นทาง)
 
 ![ภาพที่ 5.17 ใบงานนิวแมติกส์ Exp2: การต่อวงจรอินพุต](/images/book/m12_image91.png)
 
-ที่มา: เอกสารนิวแมติกส์ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ
-URL ต้นทาง)
+ที่มา: เอกสารนิวแมติกส์ Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 5.18 ใบงานนิวแมติกส์ Exp2: การต่อวงจรเอาต์พุต](/images/book/m12_image92.png)
 
-ที่มา: เอกสารนิวแมติกส์ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ
-URL ต้นทาง)
+ที่มา: เอกสารนิวแมติกส์ Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 5.19 ใบงานนิวแมติกส์ Exp2: โปรแกรมแลดเดอร์ใน GX Works3](/images/book/m12_image93.png)
 
-ที่มา: ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical
+LP)
 
 1\. ต่อสวิตช์ SW1, SW2, SW3 เข้า X3, X4, X5 และต่อโซลินอยด์วาล์วของ CY1, CY2,
 CY3 เข้า Y2, Y3, Y4 ตามภาพที่ 5.17 และ 5.18
@@ -94,25 +91,26 @@ CY3 เข้า Y2, Y3, Y4 ตามภาพที่ 5.17 และ 5.18
 
 ![ภาพที่ 5.20 ใบงานนิวแมติกส์ Exp3: การต่อวงจรอินพุต (ปุ่มและรีดสวิตช์)](/images/book/m12_image94.png)
 
-ที่มา: เอกสารนิวแมติกส์ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ
-URL ต้นทาง)
+ที่มา: เอกสารนิวแมติกส์ Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 5.21 ใบงานนิวแมติกส์ Exp3: การต่อวงจรเอาต์พุต](/images/book/m12_image95.png)
 
-ที่มา: เอกสารนิวแมติกส์ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ
-URL ต้นทาง)
+ที่มา: เอกสารนิวแมติกส์ Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 5.22 ใบงานนิวแมติกส์ Exp3: โปรแกรมแลดเดอร์ (1)](/images/book/m12_image96.png)
 
-ที่มา: ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical
+LP)
 
 ![ภาพที่ 5.23 ใบงานนิวแมติกส์ Exp3: โปรแกรมแลดเดอร์ (2)](/images/book/m12_image97.png)
 
-ที่มา: ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical
+LP)
 
 ![ภาพที่ 5.24 ใบงานนิวแมติกส์ Exp3: โปรแกรมแลดเดอร์ (3)](/images/book/m12_image98.png)
 
-ที่มา: ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical
+LP)
 
 1\. ต่อปุ่ม SW PBG เข้า X3 และรีดสวิตช์ของกระบอกลมเข้าอินพุตตามภาพที่ 5.20
 (ให้ใช้หมายเลขอินพุตตามที่ระบุในภาพและฉลากสายของชุดฝึก) ต่อเอาต์พุตตามภาพที่ 5.21
@@ -129,17 +127,16 @@ URL ต้นทาง)
 
 ![ภาพที่ 5.25 เซอร์โวมอเตอร์ MR-J4: การต่อวงจรอินพุต](/images/book/m12_image99.png)
 
-ที่มา: เอกสารเซอร์โวมอเตอร์ Workshop PLC (Konlatee Design Mechanical LP;
-ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารเซอร์โวมอเตอร์ Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 5.26 เซอร์โวมอเตอร์ MR-J4: การต่อวงจรเอาต์พุต](/images/book/m12_image100.png)
 
-ที่มา: เอกสารเซอร์โวมอเตอร์ Workshop PLC (Konlatee Design Mechanical LP;
-ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารเซอร์โวมอเตอร์ Workshop PLC (Konlatee Design Mechanical LP)
 
 ![ภาพที่ 5.27 เซอร์โวมอเตอร์: โปรแกรมแลดเดอร์ใน GX Works3](/images/book/m12_image101.png)
 
-ที่มา: ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)
+ที่มา: ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical
+LP)
 
 ศึกษาภาพที่ 5.25–5.27 เพื่อดูการต่อสัญญาณสั่งเซอร์โวจาก PLC (เอาต์พุตพัลส์ Y4,
 เซอร์โวออน Y5, รีเซ็ตอลาร์ม Y6 และลิมิตสวิตช์ X1/X2 ตามเอกสาร) จากนั้นบันทึกไฟล์

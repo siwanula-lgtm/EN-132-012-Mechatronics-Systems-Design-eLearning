@@ -74,7 +74,6 @@ Manager
 
 ที่มา: Mitsubishi Electric Corporation (2023) MELSEC iQ-F
 FX5S/FX5UJ/FX5U/FX5UC user's manual (hardware) หัวข้อ 5.9 หน้า 101
-(ไฟล์ในโฟลเดอร์ Data)
 
 1\. ปิดไฟ PLC ก่อนต่อสายทุกครั้ง ต่อ A กับ RDA/SDA (+) และ B กับ RDB/SDB (−)
 ตามแบบ 2 สายในคู่มือ และต่อ SG กับกราวด์สัญญาณ
@@ -148,17 +147,17 @@ function</p>
 <p>return bits / baud</p>
 <p>if __name__ == "__main__":</p>
 <p>req = read_holding(1, 0, 2)</p>
-<p>print("request :", req.hex(" ").upper())</p>
+<p>print("request :", req.hex(" ").upper)</p>
 <p>s = Slave(1); s.reg[0] = 250; s.reg[1] = 1013</p>
 <p>rsp = s.handle(req)</p>
-<p>print("response:", rsp.hex(" ").upper())</p>
+<p>print("response:", rsp.hex(" ").upper)</p>
 <p>print("values :", struct.unpack("&gt;HH", rsp[3:7]))</p>
 <p>w = write_single(1, 5, 0x0123)</p>
-<p>print("write :", w.hex(" ").upper(), "-&gt;", s.handle(w).hex("
-").upper(), "reg5 =", hex(s.reg[5]))</p>
+<p>print("write :", w.hex(" ").upper, "-&gt;", s.handle(w).hex("
+").upper, "reg5 =", hex(s.reg[5]))</p>
 <p>print("bad CRC :", s.handle(req[:-1] + b"\x00"))</p>
 <p>print("exception:", s.handle(read_holding(1, 20, 2)).hex("
-").upper())</p>
+").upper)</p>
 <p>t = char_time(9600, 10)</p>
 <p>print("9600 8N1 char = %.3f ms ; 3.5 char = %.2f ms ; 8-byte request
 = %.2f ms ; 9-byte reply = %.2f ms" % (t*1e3, 3.5*t*1e3, 8*t*1e3,
@@ -210,7 +209,7 @@ first</p>
 <p>uint8_t f[5] = {SLAVE_ID, (uint8_t)(fn | 0x80), code, 0, 0};</p>
 <p>sendFrame(f, 3);</p>
 <p>}</p>
-<p>void handle() { // called when a frame is complete</p>
+<p>void handle { // called when a frame is complete</p>
 <p>if (n &lt; 8) return;</p>
 <p>uint16_t c = crc16(buf, n - 2);</p>
 <p>if (buf[n - 2] != (c &amp; 0xFF) || buf[n - 1] != (c &gt;&gt; 8))
@@ -233,17 +232,17 @@ buf[5];</p>
 <p>Serial.write(buf, n); // echo request</p>
 <p>} else exceptionReply(fn, 0x01);</p>
 <p>}</p>
-<p>void setup() {</p>
+<p>void setup {</p>
 <p>Serial.begin(115200);</p>
 <p>ledcSetup(PWM_CH, 5000, 8); ledcAttachPin(LED_PIN, PWM_CH);</p>
 <p>}</p>
-<p>void loop() {</p>
-<p>while (Serial.available() &amp;&amp; n &lt; sizeof(buf)) { buf[n++] =
-Serial.read(); lastByte = micros(); }</p>
+<p>void loop {</p>
+<p>while (Serial.available &amp;&amp; n &lt; sizeof(buf)) { buf[n++] =
+Serial.read; lastByte = micros; }</p>
 <p>// frame ends after a silent gap &gt; 3.5 char (use 4 ms for 115200
 baud over USB)</p>
-<p>if (n &gt; 0 &amp;&amp; micros() - lastByte &gt; 4000) { handle(); n
-= 0; }</p>
+<p>if (n &gt; 0 &amp;&amp; micros - lastByte &gt; 4000) { handle; n = 0;
+}</p>
 <p>}</p></th>
 </tr>
 </thead>
@@ -269,14 +268,14 @@ your port</p>
 115200 8N1</p>
 <p>time.sleep(2) # wait for ESP32 reset</p>
 <p>def transact(req, rsp_len):</p>
-<p>ser.reset_input_buffer()</p>
+<p>ser.reset_input_buffer</p>
 <p>ser.write(req)</p>
-<p>t0 = time.time()</p>
+<p>t0 = time.time</p>
 <p>rsp = ser.read(rsp_len)</p>
-<p>return rsp, (time.time() - t0) * 1000</p>
+<p>return rsp, (time.time - t0) * 1000</p>
 <p># 1) write register 0 = 128 (LED brightness 0-255)</p>
 <p>rsp, ms = transact(write_single(1, 0, 128), 8)</p>
-<p>print("WRITE ", rsp.hex(" ").upper(), "CRC ok" if check_crc(rsp) else
+<p>print("WRITE ", rsp.hex(" ").upper, "CRC ok" if check_crc(rsp) else
 "CRC ERROR", "%.1f ms" % ms)</p>
 <p># 2) read registers 0..1 (0 = LED duty, 1 = ADC value)</p>
 <p>rsp, ms = transact(read_holding(1, 0, 2), 9)</p>
@@ -285,8 +284,8 @@ your port</p>
 <p>print("READ duty=%d adc=%d (%.2f V) %.1f ms" % (duty, adc, adc * 3.3
 / 4095, ms))</p>
 <p>else:</p>
-<p>print("READ no/invalid reply", rsp.hex(" ").upper())</p>
-<p>ser.close()</p></th>
+<p>print("READ no/invalid reply", rsp.hex(" ").upper)</p>
+<p>ser.close</p></th>
 </tr>
 </thead>
 <tbody>

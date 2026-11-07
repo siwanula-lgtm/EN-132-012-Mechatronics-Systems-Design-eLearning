@@ -7,7 +7,7 @@
 
 หมายเหตุ: ตอน ก ใช้ ESP32 + Arduino IDE (C/C++) และโปรแกรมจำลอง
 sim_conveyor.py ตอน ข–ค ใช้ชุดฝึก PLC FX5U ตามใบงาน Exp14, Exp15 และ Exp8
-ของโฟลเดอร์ Data/Workshop PLC สเก็ตช์ ESP32 ผ่านการตรวจตรรกะด้วยโปรแกรมจำลอง
+ของชุดฝึกอบรม Workshop PLC สเก็ตช์ ESP32 ผ่านการตรวจตรรกะด้วยโปรแกรมจำลอง
 แต่ยังไม่ได้ทดสอบกับฮาร์ดแวร์จริง ผู้สอนควรทดสอบก่อนใช้งานในชั้นเรียน
 
 ### 1. จุดประสงค์การทดลอง/การปฏิบัติงาน
@@ -124,7 +124,7 @@ PWM_CH = 0;</p>
 <p>unsigned long count = 0, lastObj = 0, lastPrint = 0;</p>
 <p>bool objPrev = false;</p>
 <p>void setMotor(int duty) { ledcWrite(PWM_CH, duty); } // 0-255</p>
-<p>void setup() {</p>
+<p>void setup {</p>
 <p>Serial.begin(115200);</p>
 <p>int ins[] = {PIN_START, PIN_STOP, PIN_RESET, PIN_ESTOP, PIN_OBJ};</p>
 <p>for (int p : ins) pinMode(p, INPUT_PULLUP);</p>
@@ -132,7 +132,7 @@ PWM_CH = 0;</p>
 OUTPUT);</p>
 <p>ledcSetup(PWM_CH, 5000, 8); ledcAttachPin(PIN_MOTOR, PWM_CH);</p>
 <p>}</p>
-<p>void loop() {</p>
+<p>void loop {</p>
 <p>bool estop = digitalRead(PIN_ESTOP) == HIGH; // NC opened or wire
 broken -&gt; emergency</p>
 <p>bool start = digitalRead(PIN_START) == LOW, stop =
@@ -150,16 +150,16 @@ below minimum torque</p>
 <p>setMotor(state == RUN ? speed : 0);</p>
 <p>digitalWrite(LAMP_G, state == RUN);</p>
 <p>digitalWrite(LAMP_Y, state == IDLE);</p>
-<p>digitalWrite(LAMP_R, state == ALARM ? (millis() / 500) % 2 : 0); //
+<p>digitalWrite(LAMP_R, state == ALARM ? (millis / 500) % 2 : 0); //
 blink 0.5 s on / 0.5 s off</p>
-<p>if (state == RUN &amp;&amp; obj &amp;&amp; !objPrev &amp;&amp;
-millis() - lastObj &gt; 50) { // rising edge + 50 ms minimum interval
+<p>if (state == RUN &amp;&amp; obj &amp;&amp; !objPrev &amp;&amp; millis
+- lastObj &gt; 50) { // rising edge + 50 ms minimum interval
 (anti-bounce)</p>
-<p>count++; lastObj = millis();</p>
+<p>count++; lastObj = millis;</p>
 <p>}</p>
 <p>objPrev = obj;</p>
-<p>if (millis() - lastPrint &gt; 1000) {</p>
-<p>lastPrint = millis();</p>
+<p>if (millis - lastPrint &gt; 1000) {</p>
+<p>lastPrint = millis;</p>
 <p>Serial.printf("state=%d count=%lu speed=%d\n", (int)state, count,
 speed);</p>
 <p>}</p>
@@ -198,7 +198,7 @@ self.last_obj &gt; 0.05:</p>
 <p>self.obj_prev = obj</p>
 <p>return self.state, self.count</p>
 <p>if __name__ == "__main__":</p>
-<p>c = Conveyor(); log = []</p>
+<p>c = Conveyor; log = []</p>
 <p># (time s, inputs) scripted events: 10 ms steps for 12 s</p>
 <p>objs = [1.0, 2.0, 3.0, 4.0, 5.0, 8.0, 9.0] # object arrival times
 (each lasts 0.36 s; the object at 4.0 s bounces)</p>
@@ -363,7 +363,7 @@ ms ทำให้นับ 1 ครั้งต่อชิ้น
 ### สื่อการเรียน เครื่องมือ อุปกรณ์
 
 ใบความรู้หน่วยที่ 8, สเก็ตช์ esp32_conveyor.ino และ sim_conveyor.py, GX Works3,
-ใบงาน PLC ในโฟลเดอร์ Data, แหล่งอ้างอิง APA 7
+ใบงาน PLC ประจำรายวิชา, แหล่งอ้างอิง APA 7
 
 ### ลำดับขั้นการดำเนินงาน
 

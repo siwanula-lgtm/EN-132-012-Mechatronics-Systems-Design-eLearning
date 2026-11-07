@@ -146,7 +146,7 @@ mm ต้องนับกี่ครั้ง**
 
 ![ภาพที่ 4.9 พร็อกซิมิตีแบบความจุ (ภาพถ่ายและแผนภาพหลักการ)](/images/book/m12_image59.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 เซนเซอร์ที่ใช้กับพีแอลซีส่วนใหญ่มี 3 สาย คือ +V, 0V และสัญญาณ ชนิดเอาต์พุตมี NPN
 (เมื่อตรวจจับ เอาต์พุตดึงสายสัญญาณลง 0V) และ PNP (เมื่อตรวจจับ เอาต์พุตจ่าย +V)
@@ -178,7 +178,7 @@ Workshop PLC ใช้พร็อกซิมิตี NPN ต่อกับ X
 
 ![ภาพที่ 4.12 การติดตั้งโฟโตอิเล็กทริกกับสายพาน](/images/book/m12_image62.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 ชุดฝึกของใบงานใช้เซนเซอร์สะท้อนรุ่น E18 (แบบ Diffuse) ซึ่งมีสายสีน้ำตาลเป็นไฟเลี้ยง
 สีน้ำเงินเป็น GND สีดำเป็นสัญญาณ LED แสดงสถานะ และตัวต้านทานปรับค่า (VR)
@@ -186,7 +186,7 @@ Workshop PLC ใช้พร็อกซิมิตี NPN ต่อกับ X
 
 ![ภาพที่ 4.13 เซนเซอร์สะท้อน E18 และการปรับระยะ](/images/book/m12_image63.png)
 
-ที่มา: ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)
+ที่มา: เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)
 
 ## 4.5 เซนเซอร์ใยแก้วนำแสง (Fiber-optic Sensor)
 
@@ -378,30 +378,30 @@ SI). Cengage Learning. (ISBN 978-1-4390-6199-2)
 
 | 4.8      | พร็อกซิมิตีแบบความจุ                                    | ผู้จัดทำ (ภาพประกอบต้นฉบับ อ้างอิงแนวคิดจาก Mechatronic Engineering of KSU, 2025)                 |
 
-| 4.9      | พร็อกซิมิตีแบบความจุ (ภาพถ่ายและแผนภาพหลักการ)            | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
+| 4.9      | พร็อกซิมิตีแบบความจุ (ภาพถ่ายและแผนภาพหลักการ)            | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
 
 | 4.10     | การต่อเซนเซอร์ NPN/PNP กับอินพุต Sink/Source            | ผู้จัดทำ (ภาพประกอบต้นฉบับ อ้างอิงแนวคิดจาก Mitsubishi Electric, 2023)                            |
 
 | 4.11     | โฟโตอิเล็กทริก 3 ชนิด                                  | ผู้จัดทำ (ภาพประกอบต้นฉบับ)                                                                    |
 
-| 4.12     | การติดตั้งโฟโตอิเล็กทริกกับสายพาน                         | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
+| 4.12     | การติดตั้งโฟโตอิเล็กทริกกับสายพาน                         | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
 
-| 4.13     | เซนเซอร์สะท้อน E18 และการปรับระยะ                     | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
+| 4.13     | เซนเซอร์สะท้อน E18 และการปรับระยะ                     | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
 
 | 4.14     | เซนเซอร์ใยแก้วนำแสง                                  | ผู้จัดทำ (ภาพประกอบต้นฉบับ อ้างอิงแนวคิดจาก Bishop, 2007)                                         |
 
 | 4.15     | การเลือกเซนเซอร์ตามงาน                               | ผู้จัดทำ (สรุปจากเนื้อหาหน่วย)                                                                   |
 
-| 4.16     | ใบงาน Exp12: การต่อ Proximity เข้า X6                | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
+| 4.16     | ใบงาน Exp12: การต่อ Proximity เข้า X6                | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
 
-| 4.17     | ใบงาน Exp12: การต่อเอาต์พุตหลอดไฟ                     | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
+| 4.17     | ใบงาน Exp12: การต่อเอาต์พุตหลอดไฟ                     | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
 
-| 4.18     | ใบงาน Exp13: การต่อ Photoelectric เข้า X7            | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
+| 4.18     | ใบงาน Exp13: การต่อ Photoelectric เข้า X7            | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
 
-| 4.19     | ใบงาน Exp13: โปรแกรมแลดเดอร์ใน GX Works3            | ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)                                           |
+| 4.19     | ใบงาน Exp13: โปรแกรมแลดเดอร์ใน GX Works3            | ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                    |
 
-| 4.20     | ใบงาน Exp15: การต่อ Proximity, Photoelectric และ X3 | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
+| 4.20     | ใบงาน Exp15: การต่อ Proximity, Photoelectric และ X3 | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
 
-| 4.21     | ใบงาน Exp15: การต่อเอาต์พุตมอเตอร์ DC ผ่านรีเลย์ Y6/Y7    | ชุดภาพ Workshop PLC (Konlatee Design Mechanical LP; ไม่ระบุ URL ต้นทาง)                       |
+| 4.21     | ใบงาน Exp15: การต่อเอาต์พุตมอเตอร์ DC ผ่านรีเลย์ Y6/Y7    | เอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                               |
 
-| 4.22     | ใบงาน Exp15: โปรแกรมแลดเดอร์ใน GX Works3            | ภาพหน้าจอจากชุดภาพ Workshop PLC (ไม่ระบุ URL ต้นทาง)                                           |
+| 4.22     | ใบงาน Exp15: โปรแกรมแลดเดอร์ใน GX Works3            | ภาพหน้าจอจากเอกสารชุดฝึกอบรม Workshop PLC (Konlatee Design Mechanical LP)                    |
