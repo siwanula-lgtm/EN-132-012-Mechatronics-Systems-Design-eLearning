@@ -182,7 +182,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           <div className="h-px bg-gray-200 dark:bg-gray-800 my-2" />
 
           <SidebarSection title="แหล่งข้อมูล" icon={<FileText className="w-4 h-4" />}>
-            <SidebarLink href="https://www.mitsubishielectric.com/fa/products/cnt/plc/" label="Mitsubishi MELSEC iQ-F (FX5U)" external onClick={onClose} />
+            <SidebarLink href="https://www.mitsubishielectric.com/fa/products/cnt/plc/" label="Mitsubishi MELSEC iQ-F (FX5UJ)" external onClick={onClose} />
             <SidebarLink href="https://docs.espressif.com/projects/arduino-esp32/en/latest/" label="Arduino-ESP32 Documentation" external onClick={onClose} />
             <SidebarLink href="https://pyserial.readthedocs.io/" label="pySerial Documentation" external onClick={onClose} />
             <SidebarLink href="https://modbus.org/specs.php" label="Modbus Specifications" external onClick={onClose} />
