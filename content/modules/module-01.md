@@ -322,34 +322,25 @@ Works3 ได้ถูกต้อง โดยปฏิบัติตามล
 
 ### ตารางที่ 1.3 โปรแกรมแลดเดอร์การทดลอง INPUT-OUTPUT (แบบที่ 1) ในรูปแบบรายการคำสั่ง
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p>// Experiment 1 : INPUT-OUTPUT (type 1) -- Ladder Diagram (LD)
-with Instruction List (IL)</p>
-<p>// Rung 0 : SW PBG (X3) --&gt; LAMP G (Y1)</p>
-<p>X3 |------| |-------------------------------------( Y1 )</p>
-<p>// Rung 1 : SW PBY (X4) --&gt; LAMP Y (Y3)</p>
-<p>X4 |------| |-------------------------------------( Y3 )</p>
-<p>// Rung 2 : SW PBR (X5) --&gt; LAMP R (Y4)</p>
-<p>X5 |------| |-------------------------------------( Y4 )</p>
-<p>[ END ]</p>
-<p>// Equivalent Instruction List</p>
-<p>LD X3 // read input X3 (PBG pressed = ON)</p>
-<p>OUT Y1 // drive output Y1 (LAMP G)</p>
-<p>LD X4 // read input X4 (PBY pressed = ON)</p>
-<p>OUT Y3 // drive output Y3 (LAMP Y)</p>
-<p>LD X5 // read input X5 (PBR pressed = ON)</p>
-<p>OUT Y4 // drive output Y4 (LAMP R)</p>
-<p>END</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```cpp
+// Experiment 1 : INPUT-OUTPUT (type 1)  -- Ladder Diagram (LD) with Instruction List (IL)
+// Rung 0 : SW PBG (X3) --> LAMP G (Y1)
+   X3 |------| |-------------------------------------( Y1 )
+// Rung 1 : SW PBY (X4) --> LAMP Y (Y3)
+   X4 |------| |-------------------------------------( Y3 )
+// Rung 2 : SW PBR (X5) --> LAMP R (Y4)
+   X5 |------| |-------------------------------------( Y4 )
+                                                      [ END ]
+
+// Equivalent Instruction List
+LD   X3      // read input X3  (PBG pressed = ON)
+OUT  Y1      // drive output Y1 (LAMP G)
+LD   X4      // read input X4  (PBY pressed = ON)
+OUT  Y3      // drive output Y3 (LAMP Y)
+LD   X5      // read input X5  (PBR pressed = ON)
+OUT  Y4      // drive output Y4 (LAMP R)
+END
+```
 
 การตั้งค่าโปรแกรมและตรวจสอบการทำงานมีขั้นตอนดังนี้
 

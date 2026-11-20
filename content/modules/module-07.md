@@ -317,89 +317,75 @@ modbus_rtu.py
 
 **ตารางที่ 7.4 สคริปต์ Python สำหรับสร้างเฟรม Modbus RTU คำนวณ CRC-16 และจำลองสเลฟ (modbus_rtu.py)**
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p># modbus_rtu.py : Modbus RTU frame builder / parser / software
-slave (no hardware needed)</p>
-<p>import struct</p>
-<p>def crc16(data: bytes) -&gt; int:</p>
-<p>"""CRC-16/MODBUS : polynomial 0xA001 (reflected), initial value
-0xFFFF"""</p>
-<p>crc = 0xFFFF</p>
-<p>for b in data:</p>
-<p>crc ^= b</p>
-<p>for _ in range(8):</p>
-<p>crc = (crc &gt;&gt; 1) ^ 0xA001 if crc &amp; 1 else crc &gt;&gt;
-1</p>
-<p>return crc</p>
-<p>def add_crc(frame: bytes) -&gt; bytes:</p>
-<p>c = crc16(frame)</p>
-<p>return frame + bytes([c &amp; 0xFF, c &gt;&gt; 8]) # CRC low byte
-first</p>
-<p>def check_crc(frame: bytes) -&gt; bool:</p>
-<p>return len(frame) &gt;= 4 and crc16(frame[:-2]) == (frame[-2] |
-frame[-1] &lt;&lt; 8)</p>
-<p>def read_holding(addr, start, qty): # function 0x03</p>
-<p>return add_crc(struct.pack("&gt;BBHH", addr, 0x03, start, qty))</p>
-<p>def write_single(addr, reg, value): # function 0x06</p>
-<p>return add_crc(struct.pack("&gt;BBHH", addr, 0x06, reg, value))</p>
-<p>class Slave:</p>
-<p>"""Software Modbus RTU slave with 16 holding registers"""</p>
-<p>def __init__(self, addr):</p>
-<p>self.addr = addr</p>
-<p>self.reg = [0] * 16</p>
-<p>def handle(self, req: bytes):</p>
-<p>if not check_crc(req) or req[0] != self.addr:</p>
-<p>return None # ignore: bad CRC or not my address</p>
-<p>fn = req[1]</p>
-<p>if fn == 0x03:</p>
-<p>start, qty = struct.unpack("&gt;HH", req[2:6])</p>
-<p>if start + qty &gt; len(self.reg):</p>
-<p>return add_crc(bytes([self.addr, fn | 0x80, 0x02])) # illegal data
-address</p>
-<p>data = b"".join(struct.pack("&gt;H", v) for v in self.reg[start:start
-+ qty])</p>
-<p>return add_crc(bytes([self.addr, fn, len(data)]) + data)</p>
-<p>if fn == 0x06:</p>
-<p>reg, val = struct.unpack("&gt;HH", req[2:6])</p>
-<p>if reg &gt;= len(self.reg):</p>
-<p>return add_crc(bytes([self.addr, fn | 0x80, 0x02]))</p>
-<p>self.reg[reg] = val</p>
-<p>return req # echo of the request</p>
-<p>return add_crc(bytes([self.addr, fn | 0x80, 0x01])) # illegal
-function</p>
-<p>def char_time(baud, bits=11): # 8E1 = 11 bits/char, 8N1 = 10</p>
-<p>return bits / baud</p>
-<p>if __name__ == "__main__":</p>
-<p>req = read_holding(1, 0, 2)</p>
-<p>print("request :", req.hex(" ").upper)</p>
-<p>s = Slave(1); s.reg[0] = 250; s.reg[1] = 1013</p>
-<p>rsp = s.handle(req)</p>
-<p>print("response:", rsp.hex(" ").upper)</p>
-<p>print("values :", struct.unpack("&gt;HH", rsp[3:7]))</p>
-<p>w = write_single(1, 5, 0x0123)</p>
-<p>print("write :", w.hex(" ").upper, "-&gt;", s.handle(w).hex("
-").upper, "reg5 =", hex(s.reg[5]))</p>
-<p>print("bad CRC :", s.handle(req[:-1] + b"\x00"))</p>
-<p>print("exception:", s.handle(read_holding(1, 20, 2)).hex("
-").upper)</p>
-<p>t = char_time(9600, 10)</p>
-<p>print("9600 8N1 char = %.3f ms ; 3.5 char = %.2f ms ; 8-byte request
-= %.2f ms ; 9-byte reply = %.2f ms" % (t*1e3, 3.5*t*1e3, 8*t*1e3,
-9*t*1e3))</p>
-<p>t = char_time(9600, 11)</p>
-<p>print("9600 8E1 char = %.3f ms ; 8B = %.2f ms ; 9B = %.2f ms" %
-(t*1e3, 8*t*1e3, 9*t*1e3))</p>
-<p>assert req == bytes.fromhex("010300000002C40B")</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```python
+# modbus_rtu.py : Modbus RTU frame builder / parser / software slave (no hardware needed)
+import struct
+
+def crc16(data: bytes) -> int:
+    """CRC-16/MODBUS : polynomial 0xA001 (reflected), initial value 0xFFFF"""
+    crc = 0xFFFF
+    for b in data:
+        crc ^= b
+        for _ in range(8):
+            crc = (crc >> 1) ^ 0xA001 if crc & 1 else crc >> 1
+    return crc
+
+def add_crc(frame: bytes) -> bytes:
+    c = crc16(frame)
+    return frame + bytes([c & 0xFF, c >> 8])          # CRC low byte first
+
+def check_crc(frame: bytes) -> bool:
+    return len(frame) >= 4 and crc16(frame[:-2]) == (frame[-2] | frame[-1] << 8)
+
+def read_holding(addr, start, qty):                    # function 0x03
+    return add_crc(struct.pack(">BBHH", addr, 0x03, start, qty))
+
+def write_single(addr, reg, value):                    # function 0x06
+    return add_crc(struct.pack(">BBHH", addr, 0x06, reg, value))
+
+class Slave:
+    """Software Modbus RTU slave with 16 holding registers"""
+    def __init__(self, addr):
+        self.addr = addr
+        self.reg = [0] * 16
+    def handle(self, req: bytes):
+        if not check_crc(req) or req[0] != self.addr:
+            return None                                # ignore: bad CRC or not my address
+        fn = req[1]
+        if fn == 0x03:
+            start, qty = struct.unpack(">HH", req[2:6])
+            if start + qty > len(self.reg):
+                return add_crc(bytes([self.addr, fn | 0x80, 0x02]))   # illegal data address
+            data = b"".join(struct.pack(">H", v) for v in self.reg[start:start + qty])
+            return add_crc(bytes([self.addr, fn, len(data)]) + data)
+        if fn == 0x06:
+            reg, val = struct.unpack(">HH", req[2:6])
+            if reg >= len(self.reg):
+                return add_crc(bytes([self.addr, fn | 0x80, 0x02]))
+            self.reg[reg] = val
+            return req                                 # echo of the request
+        return add_crc(bytes([self.addr, fn | 0x80, 0x01]))           # illegal function
+
+def char_time(baud, bits=11):                          # 8E1 = 11 bits/char, 8N1 = 10
+    return bits / baud
+
+if __name__ == "__main__":
+    req = read_holding(1, 0, 2)
+    print("request :", req.hex(" ").upper())
+    s = Slave(1); s.reg[0] = 250; s.reg[1] = 1013
+    rsp = s.handle(req)
+    print("response:", rsp.hex(" ").upper())
+    print("values  :", struct.unpack(">HH", rsp[3:7]))
+    w = write_single(1, 5, 0x0123)
+    print("write   :", w.hex(" ").upper(), "->", s.handle(w).hex(" ").upper(), "reg5 =", hex(s.reg[5]))
+    print("bad CRC :", s.handle(req[:-1] + b"\x00"))
+    print("exception:", s.handle(read_holding(1, 20, 2)).hex(" ").upper())
+    t = char_time(9600, 10)
+    print("9600 8N1 char = %.3f ms ; 3.5 char = %.2f ms ; 8-byte request = %.2f ms ; 9-byte reply = %.2f ms" % (t*1e3, 3.5*t*1e3, 8*t*1e3, 9*t*1e3))
+    t = char_time(9600, 11)
+    print("9600 8E1 char = %.3f ms ; 8B = %.2f ms ; 9B = %.2f ms" % (t*1e3, 8*t*1e3, 9*t*1e3))
+    assert req == bytes.fromhex("010300000002C40B")
+```
 
 ### 7.7.2 งาน ESP32 เป็นสเลฟ Modbus RTU ผ่าน USB
 
@@ -420,123 +406,92 @@ Manager
 
 ### ตารางที่ 7.5 สเก็ตช์ ESP32 สำหรับทำงานเป็นสเลฟ Modbus RTU (esp32_modbus_slave.ino)
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p>// esp32_modbus_slave.ino : ESP32 as Modbus RTU slave (address 1)
-over USB virtual COM (Serial)</p>
-<p>// Holding registers: 0 = LED duty (0-255, write), 1 = ADC of
-potentiometer (0-4095, read)</p>
-<p>// Supports function 0x03 (read holding) and 0x06 (write single).
-Core 2.x LEDC API.</p>
-<p>const uint8_t SLAVE_ID = 1;</p>
-<p>const int LED_PIN = 18, POT_PIN = 34, PWM_CH = 0;</p>
-<p>uint16_t reg[2] = {0, 0};</p>
-<p>uint8_t buf[32]; uint8_t n = 0; unsigned long lastByte = 0;</p>
-<p>uint16_t crc16(const uint8_t *d, uint8_t len) { // CRC-16/MODBUS</p>
-<p>uint16_t crc = 0xFFFF;</p>
-<p>for (uint8_t i = 0; i &lt; len; i++) {</p>
-<p>crc ^= d[i];</p>
-<p>for (uint8_t k = 0; k &lt; 8; k++) crc = (crc &amp; 1) ? (crc
-&gt;&gt; 1) ^ 0xA001 : crc &gt;&gt; 1;</p>
-<p>}</p>
-<p>return crc;</p>
-<p>}</p>
-<p>void sendFrame(uint8_t *f, uint8_t len) {</p>
-<p>uint16_t c = crc16(f, len);</p>
-<p>f[len] = c &amp; 0xFF; f[len + 1] = c &gt;&gt; 8; // CRC low byte
-first</p>
-<p>Serial.write(f, len + 2);</p>
-<p>}</p>
-<p>void exceptionReply(uint8_t fn, uint8_t code) {</p>
-<p>uint8_t f[5] = {SLAVE_ID, (uint8_t)(fn | 0x80), code, 0, 0};</p>
-<p>sendFrame(f, 3);</p>
-<p>}</p>
-<p>void handle { // called when a frame is complete</p>
-<p>if (n &lt; 8) return;</p>
-<p>uint16_t c = crc16(buf, n - 2);</p>
-<p>if (buf[n - 2] != (c &amp; 0xFF) || buf[n - 1] != (c &gt;&gt; 8))
-return; // bad CRC: stay silent</p>
-<p>if (buf[0] != SLAVE_ID) return; // not my address</p>
-<p>uint8_t fn = buf[1];</p>
-<p>uint16_t a = (buf[2] &lt;&lt; 8) | buf[3], q = (buf[4] &lt;&lt; 8) |
-buf[5];</p>
-<p>if (fn == 0x03) {</p>
-<p>if (a + q &gt; 2) { exceptionReply(fn, 0x02); return; }</p>
-<p>reg[1] = analogRead(POT_PIN);</p>
-<p>uint8_t f[16] = {SLAVE_ID, 0x03, (uint8_t)(q * 2)};</p>
-<p>for (uint8_t i = 0; i &lt; q; i++) { f[3 + 2 * i] = reg[a + i]
-&gt;&gt; 8; f[4 + 2 * i] = reg[a + i] &amp; 0xFF; }</p>
-<p>sendFrame(f, 3 + q * 2);</p>
-<p>} else if (fn == 0x06) {</p>
-<p>if (a &gt; 0) { exceptionReply(fn, 0x02); return; } // only register
-0 writable</p>
-<p>reg[0] = q; ledcWrite(PWM_CH, q &amp; 0xFF);</p>
-<p>Serial.write(buf, n); // echo request</p>
-<p>} else exceptionReply(fn, 0x01);</p>
-<p>}</p>
-<p>void setup {</p>
-<p>Serial.begin(115200);</p>
-<p>ledcSetup(PWM_CH, 5000, 8); ledcAttachPin(LED_PIN, PWM_CH);</p>
-<p>}</p>
-<p>void loop {</p>
-<p>while (Serial.available &amp;&amp; n &lt; sizeof(buf)) { buf[n++] =
-Serial.read; lastByte = micros; }</p>
-<p>// frame ends after a silent gap &gt; 3.5 char (use 4 ms for 115200
-baud over USB)</p>
-<p>if (n &gt; 0 &amp;&amp; micros - lastByte &gt; 4000) { handle; n = 0;
-}</p>
-<p>}</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```cpp
+// esp32_modbus_slave.ino : ESP32 as Modbus RTU slave (address 1) over USB virtual COM (Serial)
+// Holding registers: 0 = LED duty (0-255, write), 1 = ADC of potentiometer (0-4095, read)
+// Supports function 0x03 (read holding) and 0x06 (write single). Core 2.x LEDC API.
+const uint8_t SLAVE_ID = 1;
+const int LED_PIN = 18, POT_PIN = 34, PWM_CH = 0;
+uint16_t reg[2] = {0, 0};
+uint8_t buf[32]; uint8_t n = 0; unsigned long lastByte = 0;
+
+uint16_t crc16(const uint8_t *d, uint8_t len) {          // CRC-16/MODBUS
+  uint16_t crc = 0xFFFF;
+  for (uint8_t i = 0; i < len; i++) {
+    crc ^= d[i];
+    for (uint8_t k = 0; k < 8; k++) crc = (crc & 1) ? (crc >> 1) ^ 0xA001 : crc >> 1;
+  }
+  return crc;
+}
+void sendFrame(uint8_t *f, uint8_t len) {
+  uint16_t c = crc16(f, len);
+  f[len] = c & 0xFF; f[len + 1] = c >> 8;                 // CRC low byte first
+  Serial.write(f, len + 2);
+}
+void exceptionReply(uint8_t fn, uint8_t code) {
+  uint8_t f[5] = {SLAVE_ID, (uint8_t)(fn | 0x80), code, 0, 0};
+  sendFrame(f, 3);
+}
+void handle() {                                           // called when a frame is complete
+  if (n < 8) return;
+  uint16_t c = crc16(buf, n - 2);
+  if (buf[n - 2] != (c & 0xFF) || buf[n - 1] != (c >> 8)) return;   // bad CRC: stay silent
+  if (buf[0] != SLAVE_ID) return;                                   // not my address
+  uint8_t fn = buf[1];
+  uint16_t a = (buf[2] << 8) | buf[3], q = (buf[4] << 8) | buf[5];
+  if (fn == 0x03) {
+    if (a + q > 2) { exceptionReply(fn, 0x02); return; }
+    reg[1] = analogRead(POT_PIN);
+    uint8_t f[16] = {SLAVE_ID, 0x03, (uint8_t)(q * 2)};
+    for (uint8_t i = 0; i < q; i++) { f[3 + 2 * i] = reg[a + i] >> 8; f[4 + 2 * i] = reg[a + i] & 0xFF; }
+    sendFrame(f, 3 + q * 2);
+  } else if (fn == 0x06) {
+    if (a > 0) { exceptionReply(fn, 0x02); return; }                // only register 0 writable
+    reg[0] = q; ledcWrite(PWM_CH, q & 0xFF);
+    Serial.write(buf, n);                                           // echo request
+  } else exceptionReply(fn, 0x01);
+}
+void setup() {
+  Serial.begin(115200);
+  ledcSetup(PWM_CH, 5000, 8); ledcAttachPin(LED_PIN, PWM_CH);
+}
+void loop() {
+  while (Serial.available() && n < sizeof(buf)) { buf[n++] = Serial.read(); lastByte = micros(); }
+  // frame ends after a silent gap > 3.5 char (use 4 ms for 115200 baud over USB)
+  if (n > 0 && micros() - lastByte > 4000) { handle(); n = 0; }
+}
+```
 
 ### ตารางที่ 7.6 สคริปต์ Python สำหรับพีซีทำงานเป็นมาสเตอร์ Modbus RTU (pc_modbus_master.py)
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p># pc_modbus_master.py : PC acts as Modbus RTU master over a
-(virtual) COM port to ESP32 slave</p>
-<p>import sys, time, struct, serial # pip install pyserial</p>
-<p>from modbus_rtu import read_holding, write_single, check_crc</p>
-<p>PORT = sys.argv[1] if len(sys.argv) &gt; 1 else "COM5" # change to
-your port</p>
-<p>ser = serial.Serial(PORT, 115200, timeout=0.3) # USB virtual COM:
-115200 8N1</p>
-<p>time.sleep(2) # wait for ESP32 reset</p>
-<p>def transact(req, rsp_len):</p>
-<p>ser.reset_input_buffer</p>
-<p>ser.write(req)</p>
-<p>t0 = time.time</p>
-<p>rsp = ser.read(rsp_len)</p>
-<p>return rsp, (time.time - t0) * 1000</p>
-<p># 1) write register 0 = 128 (LED brightness 0-255)</p>
-<p>rsp, ms = transact(write_single(1, 0, 128), 8)</p>
-<p>print("WRITE ", rsp.hex(" ").upper, "CRC ok" if check_crc(rsp) else
-"CRC ERROR", "%.1f ms" % ms)</p>
-<p># 2) read registers 0..1 (0 = LED duty, 1 = ADC value)</p>
-<p>rsp, ms = transact(read_holding(1, 0, 2), 9)</p>
-<p>if check_crc(rsp):</p>
-<p>duty, adc = struct.unpack("&gt;HH", rsp[3:7])</p>
-<p>print("READ duty=%d adc=%d (%.2f V) %.1f ms" % (duty, adc, adc * 3.3
-/ 4095, ms))</p>
-<p>else:</p>
-<p>print("READ no/invalid reply", rsp.hex(" ").upper)</p>
-<p>ser.close</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```python
+# pc_modbus_master.py : PC acts as Modbus RTU master over a (virtual) COM port to ESP32 slave
+import sys, time, struct, serial            # pip install pyserial
+from modbus_rtu import read_holding, write_single, check_crc
+
+PORT = sys.argv[1] if len(sys.argv) > 1 else "COM5"     # change to your port
+ser = serial.Serial(PORT, 115200, timeout=0.3)           # USB virtual COM: 115200 8N1
+time.sleep(2)                                            # wait for ESP32 reset
+
+def transact(req, rsp_len):
+    ser.reset_input_buffer()
+    ser.write(req)
+    t0 = time.time
+    rsp = ser.read(rsp_len)
+    return rsp, (time.time - t0) * 1000
+
+# 1) write register 0 = 128 (LED brightness 0-255)
+rsp, ms = transact(write_single(1, 0, 128), 8)
+print("WRITE  ", rsp.hex(" ").upper(), "CRC ok" if check_crc(rsp) else "CRC ERROR", "%.1f ms" % ms)
+# 2) read registers 0..1 (0 = LED duty, 1 = ADC value)
+rsp, ms = transact(read_holding(1, 0, 2), 9)
+if check_crc(rsp):
+    duty, adc = struct.unpack(">HH", rsp[3:7])
+    print("READ   duty=%d adc=%d (%.2f V) %.1f ms" % (duty, adc, adc * 3.3 / 4095, ms))
+else:
+    print("READ   no/invalid reply", rsp.hex(" ").upper())
+ser.close()
+```
 
 ### 7.7.3 งานตรวจสอบการต่อสาย RS-485 ของ PLC FX5UJ ผ่านบอร์ด FX5-485-BD
 

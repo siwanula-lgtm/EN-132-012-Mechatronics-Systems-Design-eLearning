@@ -261,51 +261,41 @@ Y1 ติดค้าง การกด X4 สั่ง RST C0 ล้างค�
 
 ### ตารางที่ 6.4 สคริปต์ Python จำลองการควบคุมแบบ ON/OFF, P และ PI (pid_sim.py)
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p># pid_sim.py : ON/OFF (hysteresis) vs P vs PI control of a
-first-order heater model</p>
-<p>def simulate(controller, sp=45.0, ta=25.0, k=60.0, tau=60.0, dt=0.5,
-t_end=300.0):</p>
-<p>t, temp, u, log = 0.0, ta, 0.0, []</p>
-<p>state = {"integral": 0.0}</p>
-<p>while t &lt; t_end:</p>
-<p>u = controller(temp, sp, u, dt, state)</p>
-<p>temp += dt * (-(temp - ta) + k * u) / tau # dT/dt = (-(T-Ta) +
-K*u)/tau</p>
-<p>log.append(temp)</p>
-<p>t += dt</p>
-<p>return log</p>
-<p>def on_off(temp, sp, u, dt, st): # hysteresis +/-1 degC</p>
-<p>if temp &lt; sp - 1: return 1.0</p>
-<p>if temp &gt; sp + 1: return 0.0</p>
-<p>return u</p>
-<p>def p_ctrl(temp, sp, u, dt, st, kp=0.15):</p>
-<p>return min(1.0, max(0.0, kp * (sp - temp)))</p>
-<p>def pi_ctrl(temp, sp, u, dt, st, kp=0.15, ki=0.01):</p>
-<p>err = sp - temp</p>
-<p>new_i = st["integral"] + ki * err * dt</p>
-<p>u_raw = kp * err + new_i</p>
-<p>u = min(1.0, max(0.0, u_raw))</p>
-<p>if u == u_raw: # anti-windup: integrate only if not saturated</p>
-<p>st["integral"] = new_i</p>
-<p>return u</p>
-<p>if __name__ == "__main__":</p>
-<p>for name, c in (("ON/OFF", on_off), ("P", p_ctrl), ("PI",
-pi_ctrl)):</p>
-<p>log = simulate(c)</p>
-<p>tail = log[-100:]</p>
-<p>print("%-6s final %.2f degC last-50s range %.2f..%.2f" % (name,
-log[-1], min(tail), max(tail)))</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```python
+# pid_sim.py : ON/OFF (hysteresis) vs P vs PI control of a first-order heater model
+def simulate(controller, sp=45.0, ta=25.0, k=60.0, tau=60.0, dt=0.5, t_end=300.0):
+    t, temp, u, log = 0.0, ta, 0.0, []
+    state = {"integral": 0.0}
+    while t < t_end:
+        u = controller(temp, sp, u, dt, state)
+        temp += dt * (-(temp - ta) + k * u) / tau      # dT/dt = (-(T-Ta) + K*u)/tau
+        log.append(temp)
+        t += dt
+    return log
+
+def on_off(temp, sp, u, dt, st):                       # hysteresis +/-1 degC
+    if temp < sp - 1: return 1.0
+    if temp > sp + 1: return 0.0
+    return u
+
+def p_ctrl(temp, sp, u, dt, st, kp=0.15):
+    return min(1.0, max(0.0, kp * (sp - temp)))
+
+def pi_ctrl(temp, sp, u, dt, st, kp=0.15, ki=0.01):
+    err = sp - temp
+    new_i = st["integral"] + ki * err * dt
+    u_raw = kp * err + new_i
+    u = min(1.0, max(0.0, u_raw))
+    if u == u_raw:                                     # anti-windup: integrate only if not saturated
+        st["integral"] = new_i
+    return u
+
+if __name__ == "__main__":
+    for name, c in (("ON/OFF", on_off), ("P", p_ctrl), ("PI", pi_ctrl)):
+        log = simulate(c)
+        tail = log[-100:]
+        print("%-6s final %.2f degC   last-50s range %.2f..%.2f" % (name, log[-1], min(tail), max(tail)))
+```
 
 ผลที่คาดหวังของ pid_sim.py: ON/OFF final 45.66 °C (ช่วง 43.84–46.19 °C), P
 final 43.00 °C, PI final 45.00 °C
@@ -385,64 +375,51 @@ Visual Basic ผู้สอนควรทดสอบกับอุปกร�
 
 **ตารางที่ 6.5 สเก็ตช์ ESP32 สำหรับควบคุม LED อ่านปุ่ม และอ่านค่า ADC ผ่านพอร์ตอนุกรม (esp32_serial_ctrl.ino)**
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p>// esp32_serial_ctrl.ino : LED (PWM), push button and
-potentiometer over USB serial</p>
-<p>// Board: ESP32 DevKit (Arduino-ESP32 core 2.x). For core 3.x replace
-ledcSetup/ledcAttachPin</p>
-<p>// with ledcAttach(LED_PIN, PWM_FREQ, PWM_BITS) and use
-ledcWrite(LED_PIN, duty).</p>
-<p>const int LED_PIN = 18; // LED + 220 ohm to GND</p>
-<p>const int BTN_PIN = 4; // push button to GND (INPUT_PULLUP)</p>
-<p>const int POT_PIN = 34; // potentiometer wiper (ADC1)</p>
-<p>const int PWM_CH = 0, PWM_FREQ = 5000, PWM_BITS = 8; // duty range
-0..255</p>
-<p>String line = ""; // receive buffer</p>
-<p>void setup {</p>
-<p>Serial.begin(115200);</p>
-<p>pinMode(BTN_PIN, INPUT_PULLUP);</p>
-<p>ledcSetup(PWM_CH, PWM_FREQ, PWM_BITS);</p>
-<p>ledcAttachPin(LED_PIN, PWM_CH);</p>
-<p>Serial.println("READY");</p>
-<p>}</p>
-<p>void handle(String cmd) { // one command per line</p>
-<p>cmd.trim;</p>
-<p>if (cmd == "L1") { ledcWrite(PWM_CH, 255); Serial.println("OK
-LED=1"); }</p>
-<p>else if (cmd == "L0") { ledcWrite(PWM_CH, 0); Serial.println("OK
-LED=0"); }</p>
-<p>else if (cmd.startsWith("P")) { // P&lt;0..255&gt;</p>
-<p>int d = constrain(cmd.substring(1).toInt, 0, 255);</p>
-<p>ledcWrite(PWM_CH, d);</p>
-<p>Serial.print("OK PWM="); Serial.println(d);</p>
-<p>}</p>
-<p>else if (cmd == "R") { // read potentiometer</p>
-<p>int adc = analogRead(POT_PIN); // 0..4095</p>
-<p>Serial.print("ADC="); Serial.print(adc);</p>
-<p>Serial.print(" ("); Serial.print(adc * 3.3 / 4095.0, 2);
-Serial.println(" V)");</p>
-<p>}</p>
-<p>else if (cmd == "B") { Serial.println(digitalRead(BTN_PIN) == LOW ?
-"BTN=1" : "BTN=0"); }</p>
-<p>else { Serial.println("ERR unknown command"); }</p>
-<p>}</p>
-<p>void loop {</p>
-<p>while (Serial.available) {</p>
-<p>char c = Serial.read;</p>
-<p>if (c == '\n') { handle(line); line = ""; } // end of command</p>
-<p>else if (c != '\r') { line += c; }</p>
-<p>}</p>
-<p>}</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```cpp
+// esp32_serial_ctrl.ino : LED (PWM), push button and potentiometer over USB serial
+// Board: ESP32 DevKit (Arduino-ESP32 core 2.x). For core 3.x replace ledcSetup/ledcAttachPin
+// with ledcAttach(LED_PIN, PWM_FREQ, PWM_BITS) and use ledcWrite(LED_PIN, duty).
+const int LED_PIN = 18;      // LED + 220 ohm to GND
+const int BTN_PIN = 4;       // push button to GND (INPUT_PULLUP)
+const int POT_PIN = 34;      // potentiometer wiper (ADC1)
+const int PWM_CH = 0, PWM_FREQ = 5000, PWM_BITS = 8;   // duty range 0..255
+
+String line = "";            // receive buffer
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(BTN_PIN, INPUT_PULLUP);
+  ledcSetup(PWM_CH, PWM_FREQ, PWM_BITS);
+  ledcAttachPin(LED_PIN, PWM_CH);
+  Serial.println("READY");
+}
+
+void handle(String cmd) {    // one command per line
+  cmd.trim();
+  if (cmd == "L1") { ledcWrite(PWM_CH, 255); Serial.println("OK LED=1"); }
+  else if (cmd == "L0") { ledcWrite(PWM_CH, 0); Serial.println("OK LED=0"); }
+  else if (cmd.startsWith("P")) {                      // P<0..255>
+    int d = constrain(cmd.substring(1).toInt(), 0, 255);
+    ledcWrite(PWM_CH, d);
+    Serial.print("OK PWM="); Serial.println(d);
+  }
+  else if (cmd == "R") {                               // read potentiometer
+    int adc = analogRead(POT_PIN);                     // 0..4095
+    Serial.print("ADC="); Serial.print(adc);
+    Serial.print(" ("); Serial.print(adc * 3.3 / 4095.0, 2); Serial.println(" V)");
+  }
+  else if (cmd == "B") { Serial.println(digitalRead(BTN_PIN) == LOW ? "BTN=1" : "BTN=0"); }
+  else { Serial.println("ERR unknown command"); }
+}
+
+void loop() {
+  while (Serial.available()) {
+    char c = Serial.read();
+    if (c == '\n') { handle(line); line = ""; }        // end of command
+    else if (c != '\r') { line += c; }
+  }
+}
+```
 
 ### 6.8.2 งานสั่งงาน ESP32 ด้วย Python
 
@@ -460,40 +437,33 @@ Monitor ก่อนรัน เพราะพอร์ตใช้ร่ว�
 
 ### ตารางที่ 6.6 สคริปต์ Python สำหรับสั่งงาน ESP32 ผ่านพอร์ตอนุกรม (pc_control.py)
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p># pc_control.py : control the ESP32 sketch from a PC (pip install
-pyserial)</p>
-<p>import sys</p>
-<p>import time</p>
-<p>import serial # pyserial</p>
-<p>def send(port, text):</p>
-<p>"""Send one command line and return the first reply line."""</p>
-<p>port.write((text + "\n").encode("ascii")) # commands end with LF</p>
-<p>return port.readline.decode("ascii", "ignore").strip</p>
-<p>def main:</p>
-<p>name = sys.argv[1] if len(sys.argv) &gt; 1 else "COM3"</p>
-<p>with serial.Serial(name, 115200, timeout=1) as port:</p>
-<p>time.sleep(2) # ESP32 resets when the port opens</p>
-<p>port.reset_input_buffer</p>
-<p>print("Connected", name, "@115200")</p>
-<p>while True:</p>
-<p>cmd = input("cmd&gt; ").strip</p>
-<p>if cmd in ("exit", "quit"):</p>
-<p>break</p>
-<p>if cmd:</p>
-<p>print(send(port, cmd))</p>
-<p>if __name__ == "__main__":</p>
-<p>main</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```python
+# pc_control.py : control the ESP32 sketch from a PC (pip install pyserial)
+import sys
+import time
+import serial                                  # pyserial
+
+def send(port, text):
+    """Send one command line and return the first reply line."""
+    port.write((text + "\n").encode("ascii"))  # commands end with LF
+    return port.readline().decode("ascii", "ignore").strip()
+
+def main():
+    name = sys.argv[1] if len(sys.argv) > 1 else "COM3"
+    with serial.Serial(name, 115200, timeout=1) as port:
+        time.sleep(2)                          # ESP32 resets when the port opens
+        port.reset_input_buffer()
+        print("Connected", name, "@115200")
+        while True:
+            cmd = input("cmd> ").strip()
+            if cmd in ("exit", "quit"):
+                break
+            if cmd:
+                print(send(port, cmd))
+
+if __name__ == "__main__":
+    main()
+```
 
 ### 6.8.3 งานสร้างฟอร์ม Visual Basic ควบคุม ESP32
 
@@ -861,9 +831,69 @@ setup ทำงานครั้งเดียวตั้งค่าเร�
 
 ON/OFF แกว่งอยู่ประมาณ 44–46 °C (ในรันตัวอย่าง 43.8–46.2 °C) P (Kp = 0.15) นิ่งที่ 43 °C เกิด offset 2 °C PI (Kp = 0.15, Ki = 0.01 พร้อมป้องกัน windup) นิ่งที่ 45.00 °C เพราะอินทิกรัลสะสม error จนเป็นศูนย์
 
-# pc_control.py : control the ESP32 sketch from a PC (pip install pyserial) import sys import time import serial                                  # pyserial  def send(port, text):     """Send one command line and return the first reply line."""     port.write((text + "\n").encode("ascii"))  # commands end with LF     return port.readline.decode("ascii", "ignore").strip  def main:     name = sys.argv[1] if len(sys.argv) > 1 else "COM3"     with serial.Serial(name, 115200, timeout=1) as port:         time.sleep(2)                          # ESP32 resets when the port opens         port.reset_input_buffer         print("Connected", name, "@115200")         while True:             cmd = input("cmd> ").strip             if cmd in ("exit", "quit"):                 break             if cmd:                 print(send(port, cmd))  if __name__ == "__main__":     main
+```python
+# pc_control.py : control the ESP32 sketch from a PC (pip install pyserial)
+import sys
+import time
+import serial                                  # pyserial
 
-# pid_sim.py : ON/OFF (hysteresis) vs P vs PI control of a first-order heater model def simulate(controller, sp=45.0, ta=25.0, k=60.0, tau=60.0, dt=0.5, t_end=300.0):     t, temp, u, log = 0.0, ta, 0.0, []     state = {"integral": 0.0}     while t < t_end:         u = controller(temp, sp, u, dt, state)         temp += dt * (-(temp - ta) + k * u) / tau      # dT/dt = (-(T-Ta) + K*u)/tau         log.append(temp)         t += dt     return log  def on_off(temp, sp, u, dt, st):                       # hysteresis +/-1 degC     if temp < sp - 1: return 1.0     if temp > sp + 1: return 0.0     return u  def p_ctrl(temp, sp, u, dt, st, kp=0.15):     return min(1.0, max(0.0, kp * (sp - temp)))  def pi_ctrl(temp, sp, u, dt, st, kp=0.15, ki=0.01):     err = sp - temp     new_i = st["integral"] + ki * err * dt     u_raw = kp * err + new_i     u = min(1.0, max(0.0, u_raw))     if u == u_raw:                                     # anti-windup: integrate only if not saturated         st["integral"] = new_i     return u  if __name__ == "__main__":     for name, c in (("ON/OFF", on_off), ("P", p_ctrl), ("PI", pi_ctrl)):         log = simulate(c)         tail = log[-100:]         print("%-6s final %.2f degC   last-50s range %.2f..%.2f" % (name, log[-1], min(tail), max(tail)))
+def send(port, text):
+    """Send one command line and return the first reply line."""
+    port.write((text + "\n").encode("ascii"))  # commands end with LF
+    return port.readline().decode("ascii", "ignore").strip()
+
+def main():
+    name = sys.argv[1] if len(sys.argv) > 1 else "COM3"
+    with serial.Serial(name, 115200, timeout=1) as port:
+        time.sleep(2)                          # ESP32 resets when the port opens
+        port.reset_input_buffer()
+        print("Connected", name, "@115200")
+        while True:
+            cmd = input("cmd> ").strip()
+            if cmd in ("exit", "quit"):
+                break
+            if cmd:
+                print(send(port, cmd))
+
+if __name__ == "__main__":
+    main()
+```
+
+```python
+# pid_sim.py : ON/OFF (hysteresis) vs P vs PI control of a first-order heater model
+def simulate(controller, sp=45.0, ta=25.0, k=60.0, tau=60.0, dt=0.5, t_end=300.0):
+    t, temp, u, log = 0.0, ta, 0.0, []
+    state = {"integral": 0.0}
+    while t < t_end:
+        u = controller(temp, sp, u, dt, state)
+        temp += dt * (-(temp - ta) + k * u) / tau      # dT/dt = (-(T-Ta) + K*u)/tau
+        log.append(temp)
+        t += dt
+    return log
+
+def on_off(temp, sp, u, dt, st):                       # hysteresis +/-1 degC
+    if temp < sp - 1: return 1.0
+    if temp > sp + 1: return 0.0
+    return u
+
+def p_ctrl(temp, sp, u, dt, st, kp=0.15):
+    return min(1.0, max(0.0, kp * (sp - temp)))
+
+def pi_ctrl(temp, sp, u, dt, st, kp=0.15, ki=0.01):
+    err = sp - temp
+    new_i = st["integral"] + ki * err * dt
+    u_raw = kp * err + new_i
+    u = min(1.0, max(0.0, u_raw))
+    if u == u_raw:                                     # anti-windup: integrate only if not saturated
+        st["integral"] = new_i
+    return u
+
+if __name__ == "__main__":
+    for name, c in (("ON/OFF", on_off), ("P", p_ctrl), ("PI", pi_ctrl)):
+        log = simulate(c)
+        tail = log[-100:]
+        print("%-6s final %.2f degC   last-50s range %.2f..%.2f" % (name, log[-1], min(tail), max(tail)))
+```
 
 </details>
 

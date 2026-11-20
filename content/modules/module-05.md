@@ -396,41 +396,26 @@ CY3 เข้า Y2, Y3, Y4 ตามภาพที่ 5.17 และ 5.18
 
 ### ตารางที่ 5.6 โปรแกรม ST เทียบเท่าของการควบคุมกระบอกลมแบบแมนนวล (Exp2)
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p>(* Exp2 manual mode : SW1/SW2/SW3 = X3/X4/X5 -&gt; Y2/Y3/Y4
-*)</p>
-<p>(* Follow the ladder in Fig 5.19; this is the direct-drive version
-*)</p>
-<p>Y2 := X3; (* CY1 double-acting cylinder *)</p>
-<p>Y3 := X4; (* CY2 single-acting cylinder *)</p>
-<p>Y4 := X5; (* CY3 vacuum cup *)</p>
-<p>(* Exp3 AUTO mode : step sequencer (see Fig 5.13 and Fig 5.22-5.24)
-*)</p>
-<p>(* M10..M17 = step flags. Map the reed-sensor tags to the real X
-*)</p>
-<p>(* addresses shown in Fig 5.20 and your kit's wire labels. *)</p>
-<p>(* START = X3 (SW PBG) ; CY1_PT1 / CY1_HOME / CY2_DN / CY2_UP = reeds
-*)</p>
-<p>IF START AND NOT M10 AND NOT M11 AND NOT M12 AND NOT M13 THEN M10 :=
-TRUE; END_IF;</p>
-<p>(* step 1 : CY1 -&gt; point 1 *)</p>
-<p>IF M10 AND CY1_PT1 THEN M10 := FALSE; M11 := TRUE; END_IF;</p>
-<p>(* step 2 : CY2 down, step 3 : vacuum ON (timer T1) *)</p>
-<p>(* step 4 : CY2 up, step 5 : CY1 -&gt; HOME *)</p>
-<p>(* step 6 : CY2 down, step 7 : vacuum OFF (timer T2) *)</p>
-<p>(* step 8 : CY2 up -&gt; end of cycle, wait next START *)</p>
-<p>(* Each step releases the previous one and waits for a reed or timer
-*)</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```text
+(* Exp2 manual mode : SW1/SW2/SW3 = X3/X4/X5 -> Y2/Y3/Y4          *)
+(* Follow the ladder in Fig 5.19; this is the direct-drive version *)
+Y2 := X3;     (* CY1 double-acting cylinder *)
+Y3 := X4;     (* CY2 single-acting cylinder *)
+Y4 := X5;     (* CY3 vacuum cup             *)
+
+(* Exp3 AUTO mode : step sequencer (see Fig 5.13 and Fig 5.22-5.24) *)
+(* M10..M17 = step flags.  Map the reed-sensor tags to the real X   *)
+(* addresses shown in Fig 5.20 and your kit's wire labels.          *)
+(* START = X3 (SW PBG) ; CY1_PT1 / CY1_HOME / CY2_DN / CY2_UP = reeds *)
+IF START AND NOT M10 AND NOT M11 AND NOT M12 AND NOT M13 THEN M10 := TRUE; END_IF;
+(* step 1 : CY1 -> point 1 *)
+IF M10 AND CY1_PT1 THEN M10 := FALSE; M11 := TRUE; END_IF;
+(* step 2 : CY2 down, step 3 : vacuum ON (timer T1) *)
+(* step 4 : CY2 up,   step 5 : CY1 -> HOME           *)
+(* step 6 : CY2 down, step 7 : vacuum OFF (timer T2) *)
+(* step 8 : CY2 up -> end of cycle, wait next START  *)
+(* Each step releases the previous one and waits for a reed or timer *)
+```
 
 ### 5.8.2 งานลำดับงานอัตโนมัติ 8 ขั้น (Exp3)
 
@@ -497,69 +482,58 @@ actuator_calc.py ในตารางที่ 5.7 รันด้วย python
 
 **ตารางที่ 5.7 สคริปต์ Python สำหรับคำนวณมอเตอร์ เซอร์โว/สเต็ปปิง และกระบอกลม (actuator_calc.py)**
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p># actuator_calc.py : motor, servo/stepper, cylinder and
-lead-screw calculations</p>
-<p>import math</p>
-<p>def sync_speed_rpm(f_hz, poles): # synchronous speed [rpm]</p>
-<p>return 120.0 * f_hz / poles</p>
-<p>def slip(ns, n): # slip (0..1)</p>
-<p>return (ns - n) / ns</p>
-<p>def vf_voltage(f_hz, v_rated=230.0, f_rated=50.0): # constant V/f
-[V]</p>
-<p>return v_rated / f_rated * f_hz</p>
-<p>def pulses_for_turns(turns, pulses_per_rev): # pulse count</p>
-<p>return turns * pulses_per_rev</p>
-<p>def speed_rpm_from_pulse_hz(f_hz, pulses_per_rev): # rpm</p>
-<p>return 60.0 * f_hz / pulses_per_rev</p>
-<p>def cylinder_force(p_mpa, d_mm, rod_mm=0.0, eff=1.0):# force [N]</p>
-<p>area = math.pi * d_mm ** 2 / 4.0 - math.pi * rod_mm ** 2 / 4.0</p>
-<p>return p_mpa * area * eff # MPa = N/mm2</p>
-<p>def free_air_litre(p_gauge_mpa, d_mm, rod_mm, stroke_mm,
-p_atm_mpa=0.1013):</p>
-<p>v_ext = math.pi * d_mm ** 2 / 4.0 * stroke_mm</p>
-<p>v_ret = (math.pi * d_mm ** 2 / 4.0 - math.pi * rod_mm ** 2 / 4.0) *
-stroke_mm</p>
-<p>ratio = (p_gauge_mpa + p_atm_mpa) / p_atm_mpa</p>
-<p>return (v_ext + v_ret) * ratio / 1000000.0 # litre per cycle</p>
-<p>def screw_speed_rpm(v_mm_s, pitch_mm): # lead screw speed [rpm]</p>
-<p>return 60.0 * v_mm_s / pitch_mm</p>
-<p>if __name__ == "__main__":</p>
-<p>print("ns 4P 50Hz/25Hz:", sync_speed_rpm(50, 4), sync_speed_rpm(25,
-4), "rpm")</p>
-<p>print("slip 1425 rpm : %.1f %%" % (100 * slip(1500, 1425)))</p>
-<p>print("V/f 25Hz/40Hz :", round(vf_voltage(25), 1),
-round(vf_voltage(40), 1), "V")</p>
-<p>ppr = 200 * 8</p>
-<p>print("stepper 5 rev :", pulses_for_turns(5, ppr), "pulses,",</p>
-<p>pulses_for_turns(5, ppr) / 4000.0, "s,",</p>
-<p>speed_rpm_from_pulse_hz(4000, ppr), "rpm")</p>
-<p>print("servo 3.5 rev :", pulses_for_turns(3.5, 1600), "pulses,",</p>
-<p>1600 * 600 / 60.0, "Hz,", pulses_for_turns(3.5, 1600) / 16000.0,
-"s")</p>
-<p>print("force ext/ret : %.1f / %.1f N" % (cylinder_force(0.6, 32),</p>
-<p>cylinder_force(0.6, 32, 12)))</p>
-<p>print("force 90%% eff : %.1f / %.1f N" % (cylinder_force(0.6, 32, 0,
-0.9),</p>
-<p>cylinder_force(0.6, 32, 12, 0.9)))</p>
-<p>print("free air : %.2f L/cycle" % free_air_litre(0.6, 32, 12,
-100))</p>
-<p>print("screw 40 mm/s :", screw_speed_rpm(40, 8), "rpm")</p>
-<p># Expected: 1500/750 rpm / 5.0 % / 115.0 and 184.0 V / 8000 pulses, 2
-s, 150 rpm /</p>
-<p># 5600 pulses, 16000 Hz, 0.35 s / 482.5 and 414.7 N / 434.3 and 373.2
-N /</p>
-<p># 1.04 L per cycle / 300 rpm</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```python
+# actuator_calc.py : motor, servo/stepper, cylinder and lead-screw calculations
+import math
+
+def sync_speed_rpm(f_hz, poles):           # synchronous speed [rpm]
+    return 120.0 * f_hz / poles
+
+def slip(ns, n):                           # slip (0..1)
+    return (ns - n) / ns
+
+def vf_voltage(f_hz, v_rated=230.0, f_rated=50.0):   # constant V/f [V]
+    return v_rated / f_rated * f_hz
+
+def pulses_for_turns(turns, pulses_per_rev):         # pulse count
+    return turns * pulses_per_rev
+
+def speed_rpm_from_pulse_hz(f_hz, pulses_per_rev):   # rpm
+    return 60.0 * f_hz / pulses_per_rev
+
+def cylinder_force(p_mpa, d_mm, rod_mm=0.0, eff=1.0):# force [N]
+    area = math.pi * d_mm ** 2 / 4.0 - math.pi * rod_mm ** 2 / 4.0
+    return p_mpa * area * eff                        # MPa = N/mm2
+
+def free_air_litre(p_gauge_mpa, d_mm, rod_mm, stroke_mm, p_atm_mpa=0.1013):
+    v_ext = math.pi * d_mm ** 2 / 4.0 * stroke_mm
+    v_ret = (math.pi * d_mm ** 2 / 4.0 - math.pi * rod_mm ** 2 / 4.0) * stroke_mm
+    ratio = (p_gauge_mpa + p_atm_mpa) / p_atm_mpa
+    return (v_ext + v_ret) * ratio / 1000000.0       # litre per cycle
+
+def screw_speed_rpm(v_mm_s, pitch_mm):    # lead screw speed [rpm]
+    return 60.0 * v_mm_s / pitch_mm
+
+if __name__ == "__main__":
+    print("ns 4P 50Hz/25Hz:", sync_speed_rpm(50, 4), sync_speed_rpm(25, 4), "rpm")
+    print("slip 1425 rpm  : %.1f %%" % (100 * slip(1500, 1425)))
+    print("V/f 25Hz/40Hz  :", round(vf_voltage(25), 1), round(vf_voltage(40), 1), "V")
+    ppr = 200 * 8
+    print("stepper 5 rev  :", pulses_for_turns(5, ppr), "pulses,",
+          pulses_for_turns(5, ppr) / 4000.0, "s,",
+          speed_rpm_from_pulse_hz(4000, ppr), "rpm")
+    print("servo 3.5 rev  :", pulses_for_turns(3.5, 1600), "pulses,",
+          1600 * 600 / 60.0, "Hz,", pulses_for_turns(3.5, 1600) / 16000.0, "s")
+    print("force ext/ret  : %.1f / %.1f N" % (cylinder_force(0.6, 32),
+          cylinder_force(0.6, 32, 12)))
+    print("force 90%% eff  : %.1f / %.1f N" % (cylinder_force(0.6, 32, 0, 0.9),
+          cylinder_force(0.6, 32, 12, 0.9)))
+    print("free air       : %.2f L/cycle" % free_air_litre(0.6, 32, 12, 100))
+    print("screw 40 mm/s  :", screw_speed_rpm(40, 8), "rpm")
+# Expected: 1500/750 rpm / 5.0 % / 115.0 and 184.0 V / 8000 pulses, 2 s, 150 rpm /
+#           5600 pulses, 16000 Hz, 0.35 s / 482.5 and 414.7 N / 434.3 and 373.2 N /
+#           1.04 L per cycle / 300 rpm
+```
 
 การตั้งค่าโปรแกรมและตรวจสอบการทำงานมีขั้นตอนดังนี้
 

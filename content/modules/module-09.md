@@ -313,83 +313,58 @@ Home) ไฟเขียวติดเมื่อถึงตำแหน่�
 
 ### ตารางที่ 9.4 สคริปต์ Python จำลองตรรกะการคัดแยกชิ้นงาน (sim_sort.py)
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p># -*- coding: utf-8 -*-</p>
-<p># sim_sort.py : logic model of the conveyor sorting task (lab Exp4
-conditions) for checking before PLC programming</p>
-<p># Inputs : sel ('NO1','NO2','OFF'), green, yellow, red (push
-buttons), estop (True = pressed),</p>
-<p># item (item at photo sensor), metal (inductive sensor sees metal),
-belt_empty</p>
-<p># Outputs : state, lamps (G/Y/R), buzzer, conveyor, counters pom /
-iron</p>
-<p>class SortCtrl:</p>
-<p>def __init__(self):</p>
-<p>self.state = "IDLE"; self.pom = 0; self.iron = 0</p>
-<p>self.prev_item = False; self.prev_green = False; self.prev_red =
-False; self.prev_yel = False</p>
-<p>def step(self, sel="OFF", green=False, yellow=False, red=False,
-estop=False,</p>
-<p>item=False, metal=False, belt_empty=True):</p>
-<p>g = green and not self.prev_green; r = red and not self.prev_red; y =
-yellow and not self.prev_yel</p>
-<p>rise_item = item and not self.prev_item</p>
-<p>self.prev_green, self.prev_red, self.prev_yel, self.prev_item =
-green, red, yellow, item</p>
-<p>if estop: # highest priority: any state -&gt; ALARM</p>
-<p>self.state = "ALARM"</p>
-<p>elif self.state == "ALARM":</p>
-<p>if y: self.state = "IDLE" # E-Stop released + yellow = reset</p>
-<p>elif self.state == "IDLE":</p>
-<p>if sel == "NO1": self.pom = self.iron = 0 # reset counters</p>
-<p>if sel == "NO2" and g and belt_empty: self.state = "RUN"</p>
-<p>elif self.state == "RUN":</p>
-<p>if r: self.state = "IDLE" # red = stop at once</p>
-<p>elif rise_item: # classify by inductive sensor</p>
-<p>if metal: self.iron += 1</p>
-<p>else: self.pom += 1</p>
-<p>lamp = {"IDLE": "Yellow", "RUN": "Green", "ALARM":
-"Red"}[self.state]</p>
-<p>return dict(state=self.state, lamp=lamp, buzzer=self.state ==
-"ALARM",</p>
-<p>conveyor=self.state == "RUN", pom=self.pom, iron=self.iron)</p>
-<p>if __name__ == "__main__":</p>
-<p>c = SortCtrl; log = []</p>
-<p>def ev(t, **k):</p>
-<p>o = c.step(**k); log.append(f"t={t:5.1f}s {o['state']:5s}
-lamp={o['lamp']:6s} conv={int(o['conveyor'])} buz={int(o['buzzer'])}
-POM={o['pom']} IRON={o['iron']}")</p>
-<p>ev(0.0)</p>
-<p>ev(0.5, sel="NO2", green=True, belt_empty=False) # item still on belt
--&gt; start refused</p>
-<p>ev(1.0, sel="NO2", green=False)</p>
-<p>ev(1.5, sel="NO2", green=True) # start accepted</p>
-<p>ev(2.0, sel="NO2")</p>
-<p>ev(2.5, sel="NO2", item=True, metal=False); ev(2.7, sel="NO2") #
-POM</p>
-<p>ev(3.5, sel="NO2", item=True, metal=True); ev(3.7, sel="NO2") #
-IRON</p>
-<p>ev(4.5, sel="NO2", item=True, metal=False); ev(4.7, sel="NO2") #
-POM</p>
-<p>ev(5.5, sel="NO2", red=True); ev(5.7, sel="NO2") # red stop</p>
-<p>ev(6.5, sel="NO2", green=True) # restart</p>
-<p>ev(7.5, sel="NO2", item=True, metal=True); ev(7.7, sel="NO2") #
-IRON</p>
-<p>ev(8.5, sel="NO2", estop=True) # emergency</p>
-<p>ev(9.5, sel="NO2", estop=False) # released, still ALARM</p>
-<p>ev(10.0, sel="NO2", yellow=True) # reset -&gt; IDLE</p>
-<p>ev(11.0, sel="NO1") # reset counters</p>
-<p>print("\n".join(log))</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```python
+# -*- coding: utf-8 -*-
+# sim_sort.py : logic model of the conveyor sorting task (lab Exp4 conditions) for checking before PLC programming
+# Inputs  : sel ('NO1','NO2','OFF'), green, yellow, red (push buttons), estop (True = pressed),
+#           item (item at photo sensor), metal (inductive sensor sees metal), belt_empty
+# Outputs : state, lamps (G/Y/R), buzzer, conveyor, counters pom / iron
+class SortCtrl:
+    def __init__(self):
+        self.state = "IDLE"; self.pom = 0; self.iron = 0
+        self.prev_item = False; self.prev_green = False; self.prev_red = False; self.prev_yel = False
+    def step(self, sel="OFF", green=False, yellow=False, red=False, estop=False,
+             item=False, metal=False, belt_empty=True):
+        g = green and not self.prev_green; r = red and not self.prev_red; y = yellow and not self.prev_yel
+        rise_item = item and not self.prev_item
+        self.prev_green, self.prev_red, self.prev_yel, self.prev_item = green, red, yellow, item
+        if estop:                                   # highest priority: any state -> ALARM
+            self.state = "ALARM"
+        elif self.state == "ALARM":
+            if y: self.state = "IDLE"               # E-Stop released + yellow = reset
+        elif self.state == "IDLE":
+            if sel == "NO1": self.pom = self.iron = 0         # reset counters
+            if sel == "NO2" and g and belt_empty: self.state = "RUN"
+        elif self.state == "RUN":
+            if r: self.state = "IDLE"               # red = stop at once
+            elif rise_item:                         # classify by inductive sensor
+                if metal: self.iron += 1
+                else: self.pom += 1
+        lamp = {"IDLE": "Yellow", "RUN": "Green", "ALARM": "Red"}[self.state]
+        return dict(state=self.state, lamp=lamp, buzzer=self.state == "ALARM",
+                    conveyor=self.state == "RUN", pom=self.pom, iron=self.iron)
+
+if __name__ == "__main__":
+    c = SortCtrl(); log = []
+    def ev(t, **k):
+        o = c.step(**k); log.append(f"t={t:5.1f}s  {o['state']:5s} lamp={o['lamp']:6s} conv={int(o['conveyor'])} buz={int(o['buzzer'])}  POM={o['pom']} IRON={o['iron']}")
+    ev(0.0)
+    ev(0.5, sel="NO2", green=True, belt_empty=False)          # item still on belt -> start refused
+    ev(1.0, sel="NO2", green=False)
+    ev(1.5, sel="NO2", green=True)                            # start accepted
+    ev(2.0, sel="NO2")
+    ev(2.5, sel="NO2", item=True, metal=False); ev(2.7, sel="NO2")   # POM
+    ev(3.5, sel="NO2", item=True, metal=True);  ev(3.7, sel="NO2")   # IRON
+    ev(4.5, sel="NO2", item=True, metal=False); ev(4.7, sel="NO2")   # POM
+    ev(5.5, sel="NO2", red=True); ev(5.7, sel="NO2")          # red stop
+    ev(6.5, sel="NO2", green=True)                            # restart
+    ev(7.5, sel="NO2", item=True, metal=True); ev(7.7, sel="NO2")    # IRON
+    ev(8.5, sel="NO2", estop=True)                            # emergency
+    ev(9.5, sel="NO2", estop=False)                           # released, still ALARM
+    ev(10.0, sel="NO2", yellow=True)                          # reset -> IDLE
+    ev(11.0, sel="NO1")                                       # reset counters
+    print("\n".join(log))
+```
 
 การตั้งค่าโปรแกรมและตรวจสอบการทำงานมีขั้นตอนดังนี้
 

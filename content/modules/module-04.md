@@ -407,47 +407,39 @@ Y7 *)</p>
 
 **ตารางที่ 4.7 สคริปต์ Python สำหรับคำนวณค่าเอนโค้ดเดอร์ พร็อกซิมิตี และไฟเบอร์ออปติก (sensor_calc.py)**
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p># sensor_calc.py : encoder, proximity and fiber-optic
-calculations</p>
-<p>import math</p>
-<p>def enc_resolution_deg(ppr, m=4): # angular resolution [deg]</p>
-<p>return 360.0 / (m * ppr)</p>
-<p>def enc_speed_rpm(f_hz, ppr, m=1): # speed from pulse frequency
-[rpm]</p>
-<p>return 60.0 * f_hz / (m * ppr)</p>
-<p>def screw_mm_per_count(pitch_mm, ppr, m=4):# linear resolution
-[mm/count]</p>
-<p>return pitch_mm / (m * ppr)</p>
-<p>def abs_resolution_deg(bits): # absolute encoder [deg]</p>
-<p>return 360.0 / (2 ** bits)</p>
-<p>def prox_range(sn_mm, k): # real sensing range Sr = k*Sn [mm]</p>
-<p>return k * sn_mm</p>
-<p>def numerical_aperture(n1, n2): # fiber NA and acceptance
-half-angle</p>
-<p>na = math.sqrt(n1 ** 2 - n2 ** 2)</p>
-<p>return na, math.degrees(math.asin(na))</p>
-<p>if __name__ == "__main__":</p>
-<p>print("Res 600 PPR x4 :", enc_resolution_deg(600), "deg")</p>
-<p>print("Speed :", enc_speed_rpm(3000, 600), "rpm")</p>
-<p>print("mm per count :", screw_mm_per_count(5, 1000), "mm")</p>
-<p>print("12-bit absolute:", round(abs_resolution_deg(12), 4),
-"deg")</p>
-<p>print("Sr (Al, k=0.4) :", prox_range(8, 0.4), "mm")</p>
-<p>na, th = numerical_aperture(1.49, 1.40)</p>
-<p>print("NA = %.2f , theta = %.1f deg" % (na, th))</p>
-<p># Expected: 0.15 deg / 300.0 rpm / 0.00125 mm / 0.0879 deg / 3.2 mm /
-NA = 0.51 , theta = 30.7 deg</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```python
+# sensor_calc.py : encoder, proximity and fiber-optic calculations
+import math
+
+def enc_resolution_deg(ppr, m=4):          # angular resolution [deg]
+    return 360.0 / (m * ppr)
+
+def enc_speed_rpm(f_hz, ppr, m=1):         # speed from pulse frequency [rpm]
+    return 60.0 * f_hz / (m * ppr)
+
+def screw_mm_per_count(pitch_mm, ppr, m=4):# linear resolution [mm/count]
+    return pitch_mm / (m * ppr)
+
+def abs_resolution_deg(bits):              # absolute encoder [deg]
+    return 360.0 / (2 ** bits)
+
+def prox_range(sn_mm, k):                  # real sensing range Sr = k*Sn [mm]
+    return k * sn_mm
+
+def numerical_aperture(n1, n2):            # fiber NA and acceptance half-angle
+    na = math.sqrt(n1 ** 2 - n2 ** 2)
+    return na, math.degrees(math.asin(na))
+
+if __name__ == "__main__":
+    print("Res 600 PPR x4 :", enc_resolution_deg(600), "deg")
+    print("Speed          :", enc_speed_rpm(3000, 600), "rpm")
+    print("mm per count   :", screw_mm_per_count(5, 1000), "mm")
+    print("12-bit absolute:", round(abs_resolution_deg(12), 4), "deg")
+    print("Sr (Al, k=0.4) :", prox_range(8, 0.4), "mm")
+    na, th = numerical_aperture(1.49, 1.40)
+    print("NA = %.2f , theta = %.1f deg" % (na, th))
+# Expected: 0.15 deg / 300.0 rpm / 0.00125 mm / 0.0879 deg / 3.2 mm / NA = 0.51 , theta = 30.7 deg
+```
 
 การตั้งค่าโปรแกรมและตรวจสอบการทำงานมีขั้นตอนดังนี้
 

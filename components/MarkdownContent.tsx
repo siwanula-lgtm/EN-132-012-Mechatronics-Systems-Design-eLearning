@@ -16,6 +16,8 @@ interface MarkdownContentProps {
 
 const LANG_LABELS: Record<string, string> = {
   python: "Python",
+  cpp: "Arduino C++",
+  arduino: "Arduino C++",
   py: "Python",
   bash: "Terminal",
   sh: "Terminal",

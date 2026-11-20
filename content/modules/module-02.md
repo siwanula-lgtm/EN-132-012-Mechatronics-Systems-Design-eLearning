@@ -315,29 +315,19 @@ R2 ทำงาน มอเตอร์หมุน CCW
 
 ### ตารางที่ 2.3 โปรแกรมแลดเดอร์ควบคุมมอเตอร์ DC (การทดลองที่ 14) ในรูปแบบรายการคำสั่ง
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p>// Experiment 14 : DC MOTOR -- Ladder Diagram (LD) with
-Instruction List (IL)</p>
-<p>// Rung 0 : SW SCT1 (X1) --&gt; CW (Y6 -&gt; relay R1)</p>
-<p>X1 |------| |-------------------------------------( Y6 )</p>
-<p>// Rung 1 : SW SCT2 (X2) --&gt; CCW (Y7 -&gt; relay R2)</p>
-<p>X2 |------| |-------------------------------------( Y7 )</p>
-<p>[ END ]</p>
-<p>LD X1 // selector switch to the right</p>
-<p>OUT Y6 // motor rotates CW</p>
-<p>LD X2 // selector switch to the left</p>
-<p>OUT Y7 // motor rotates CCW</p>
-<p>END</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```cpp
+// Experiment 14 : DC MOTOR  -- Ladder Diagram (LD) with Instruction List (IL)
+// Rung 0 : SW SCT1 (X1) --> CW  (Y6 -> relay R1)
+   X1 |------| |-------------------------------------( Y6 )
+// Rung 1 : SW SCT2 (X2) --> CCW (Y7 -> relay R2)
+   X2 |------| |-------------------------------------( Y7 )
+                                                      [ END ]
+LD   X1      // selector switch to the right
+OUT  Y6      // motor rotates CW
+LD   X2      // selector switch to the left
+OUT  Y7      // motor rotates CCW
+END
+```
 
 ![ภาพที่ 2.13 โปรแกรมแลดเดอร์ใน GX Works3 สำหรับการทดลองมอเตอร์ DC (ตัวอย่างจากชุดฝึก)](/images/book/image32.png)
 
@@ -429,32 +419,19 @@ Hz, กด SW PBY ค้าง มอเตอร์หมุน CCW ที่ 1
 
 **ตารางที่ 2.4 โปรแกรมแลดเดอร์ควบคุมสเต็ปปิ้งมอเตอร์ด้วยคำสั่ง DPLSV (การทดลองที่ 16) ในรูปแบบรายการคำสั่ง**
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p>// Experiment 16 : STEPPING MOTOR (DPLSV) -- 1,600 pulses/rev,
-speed 10,000 Hz</p>
-<p>// Rung 0 : SW PBG (X3) held --&gt; rotate CW (Axis 1, status flag
-M50)</p>
-<p>X3 |------| |-----------------[ DPLSV K10000 K1 M50 ]</p>
-<p>// Rung 1 : SW PBY (X4) held --&gt; rotate CCW (negative
-frequency)</p>
-<p>X4 |------| |-----------------[ DPLSV K-10000 K1 M50 ]</p>
-<p>[ END ]</p>
-<p>LD X3</p>
-<p>DPLSV K10000 K1 M50 // S1 = speed (Hz), D1 = axis number, D2 =
-flag</p>
-<p>LD X4</p>
-<p>DPLSV K-10000 K1 M50 // negative value reverses the direction</p>
-<p>END</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```cpp
+// Experiment 16 : STEPPING MOTOR (DPLSV)  -- 1,600 pulses/rev, speed 10,000 Hz
+// Rung 0 : SW PBG (X3) held --> rotate CW  (Axis 1, status flag M50)
+   X3 |------| |-----------------[ DPLSV  K10000   K1   M50 ]
+// Rung 1 : SW PBY (X4) held --> rotate CCW (negative frequency)
+   X4 |------| |-----------------[ DPLSV  K-10000  K1   M50 ]
+                                                      [ END ]
+LD    X3
+DPLSV K10000  K1 M50   // S1 = speed (Hz), D1 = axis number, D2 = flag
+LD    X4
+DPLSV K-10000 K1 M50   // negative value reverses the direction
+END
+```
 
 ![ภาพที่ 2.15 โปรแกรมแลดเดอร์ใน GX Works3 สำหรับการทดลองสเต็ปปิ้งมอเตอร์ (DPLSV) (ตัวอย่างจากชุดฝึก)](/images/book/image33.png)
 

@@ -334,78 +334,59 @@ E-Stop แล้วกด RESET กลับสู่ IDLE
 
 **ตารางที่ 8.4 สเก็ตช์ ESP32 ควบคุมสายพานด้วยเครื่องสถานะ การนับชิ้นงาน และ PWM (esp32_conveyor.ino)**
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p>// esp32_conveyor.ino : conveyor controller state machine on
-ESP32 (Arduino-ESP32 core 2.x LEDC API)</p>
-<p>// States: IDLE -&gt; RUN (Start) -&gt; IDLE (Stop) ; any state -&gt;
-ALARM (E-stop pressed) -&gt; IDLE (E-stop released + Reset)</p>
-<p>// Inputs (INPUT_PULLUP, pressed = LOW): START GPIO4, STOP GPIO5,
-RESET GPIO19</p>
-<p>// E-STOP GPIO16 uses a NC contact: closed (LOW) = normal, open
-(HIGH) = emergency / wire break</p>
-<p>// OBJECT sensor GPIO27 (photo/IR, active LOW), POT GPIO34 sets belt
-speed</p>
-<p>// Outputs : MOTOR PWM GPIO18 -&gt; MOSFET/driver, LAMP_G GPIO21,
-LAMP_Y GPIO22, LAMP_R GPIO23 (alarm)</p>
-<p>const int PIN_START = 4, PIN_STOP = 5, PIN_RESET = 19, PIN_ESTOP =
-16, PIN_OBJ = 27, PIN_POT = 34;</p>
-<p>const int PIN_MOTOR = 18, LAMP_G = 21, LAMP_Y = 22, LAMP_R = 23,
-PWM_CH = 0;</p>
-<p>enum State { IDLE, RUN, ALARM };</p>
-<p>State state = IDLE;</p>
-<p>unsigned long count = 0, lastObj = 0, lastPrint = 0;</p>
-<p>bool objPrev = false;</p>
-<p>void setMotor(int duty) { ledcWrite(PWM_CH, duty); } // 0-255</p>
-<p>void setup {</p>
-<p>Serial.begin(115200);</p>
-<p>int ins[] = {PIN_START, PIN_STOP, PIN_RESET, PIN_ESTOP, PIN_OBJ};</p>
-<p>for (int p : ins) pinMode(p, INPUT_PULLUP);</p>
-<p>pinMode(LAMP_G, OUTPUT); pinMode(LAMP_Y, OUTPUT); pinMode(LAMP_R,
-OUTPUT);</p>
-<p>ledcSetup(PWM_CH, 5000, 8); ledcAttachPin(PIN_MOTOR, PWM_CH);</p>
-<p>}</p>
-<p>void loop {</p>
-<p>bool estop = digitalRead(PIN_ESTOP) == HIGH; // NC opened or wire
-broken -&gt; emergency</p>
-<p>bool start = digitalRead(PIN_START) == LOW, stop =
-digitalRead(PIN_STOP) == LOW;</p>
-<p>bool reset = digitalRead(PIN_RESET) == LOW;</p>
-<p>bool obj = digitalRead(PIN_OBJ) == LOW;</p>
-<p>if (estop) state = ALARM; // highest priority in every state</p>
-<p>switch (state) {</p>
-<p>case IDLE: if (start &amp;&amp; !stop) state = RUN; break;</p>
-<p>case RUN: if (stop) state = IDLE; break;</p>
-<p>case ALARM: if (!estop &amp;&amp; reset) state = IDLE; break;</p>
-<p>}</p>
-<p>int speed = map(analogRead(PIN_POT), 0, 4095, 60, 255); // never
-below minimum torque</p>
-<p>setMotor(state == RUN ? speed : 0);</p>
-<p>digitalWrite(LAMP_G, state == RUN);</p>
-<p>digitalWrite(LAMP_Y, state == IDLE);</p>
-<p>digitalWrite(LAMP_R, state == ALARM ? (millis / 500) % 2 : 0); //
-blink 0.5 s on / 0.5 s off</p>
-<p>if (state == RUN &amp;&amp; obj &amp;&amp; !objPrev &amp;&amp; millis
-- lastObj &gt; 50) { // rising edge + 50 ms minimum interval
-(anti-bounce)</p>
-<p>count++; lastObj = millis;</p>
-<p>}</p>
-<p>objPrev = obj;</p>
-<p>if (millis - lastPrint &gt; 1000) {</p>
-<p>lastPrint = millis;</p>
-<p>Serial.printf("state=%d count=%lu speed=%d\n", (int)state, count,
-speed);</p>
-<p>}</p>
-<p>}</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```cpp
+// esp32_conveyor.ino : conveyor controller state machine on ESP32 (Arduino-ESP32 core 2.x LEDC API)
+// States: IDLE -> RUN (Start) -> IDLE (Stop) ; any state -> ALARM (E-stop pressed) -> IDLE (E-stop released + Reset)
+// Inputs  (INPUT_PULLUP, pressed = LOW): START GPIO4, STOP GPIO5, RESET GPIO19
+//          E-STOP GPIO16 uses a NC contact: closed (LOW) = normal, open (HIGH) = emergency / wire break
+//          OBJECT sensor GPIO27 (photo/IR, active LOW), POT GPIO34 sets belt speed
+// Outputs : MOTOR PWM GPIO18 -> MOSFET/driver, LAMP_G GPIO21, LAMP_Y GPIO22, LAMP_R GPIO23 (alarm)
+const int PIN_START = 4, PIN_STOP = 5, PIN_RESET = 19, PIN_ESTOP = 16, PIN_OBJ = 27, PIN_POT = 34;
+const int PIN_MOTOR = 18, LAMP_G = 21, LAMP_Y = 22, LAMP_R = 23, PWM_CH = 0;
+enum State { IDLE, RUN, ALARM };
+State state = IDLE;
+unsigned long count = 0, lastObj = 0, lastPrint = 0;
+bool objPrev = false;
+
+void setMotor(int duty) { ledcWrite(PWM_CH, duty); }          // 0-255
+
+void setup() {
+  Serial.begin(115200);
+  int ins[] = {PIN_START, PIN_STOP, PIN_RESET, PIN_ESTOP, PIN_OBJ};
+  for (int p : ins) pinMode(p, INPUT_PULLUP);
+  pinMode(LAMP_G, OUTPUT); pinMode(LAMP_Y, OUTPUT); pinMode(LAMP_R, OUTPUT);
+  ledcSetup(PWM_CH, 5000, 8); ledcAttachPin(PIN_MOTOR, PWM_CH);
+}
+
+void loop() {
+  bool estop = digitalRead(PIN_ESTOP) == HIGH;                // NC opened or wire broken -> emergency
+  bool start = digitalRead(PIN_START) == LOW, stop = digitalRead(PIN_STOP) == LOW;
+  bool reset = digitalRead(PIN_RESET) == LOW;
+  bool obj = digitalRead(PIN_OBJ) == LOW;
+
+  if (estop) state = ALARM;                                    // highest priority in every state
+  switch (state) {
+    case IDLE:  if (start && !stop) state = RUN; break;
+    case RUN:   if (stop) state = IDLE; break;
+    case ALARM: if (!estop && reset) state = IDLE; break;
+  }
+
+  int speed = map(analogRead(PIN_POT), 0, 4095, 60, 255);     // never below minimum torque
+  setMotor(state == RUN ? speed : 0);
+  digitalWrite(LAMP_G, state == RUN);
+  digitalWrite(LAMP_Y, state == IDLE);
+  digitalWrite(LAMP_R, state == ALARM ? (millis() / 500) % 2 : 0);  // blink 0.5 s on / 0.5 s off
+
+  if (state == RUN && obj && !objPrev && millis() - lastObj > 50) {  // rising edge + 50 ms minimum interval (anti-bounce)
+    count++; lastObj = millis();
+  }
+  objPrev = obj;
+  if (millis() - lastPrint > 1000) {
+    lastPrint = millis();
+    Serial.printf("state=%d count=%lu speed=%d\n", (int)state, count, speed);
+  }
+}
+```
 
 ### 8.8.2 งานจำลองตรรกะการควบคุมด้วย Python
 
@@ -425,60 +406,42 @@ speed);</p>
 
 ### ตารางที่ 8.5 สคริปต์ Python จำลองตรรกะของสเก็ตช์ควบคุมสายพาน (sim_conveyor.py)
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p># sim_conveyor.py : software model of the esp32_conveyor.ino
-state machine (no hardware needed)</p>
-<p>IDLE, RUN, ALARM = "IDLE", "RUN", "ALARM"</p>
-<p>class Conveyor:</p>
-<p>def __init__(self):</p>
-<p>self.state, self.count, self.obj_prev, self.last_obj = IDLE, 0,
-False, -1.0</p>
-<p>def step(self, t, start=False, stop=False, reset=False,
-estop_open=False, obj=False):</p>
-<p>if estop_open: self.state = ALARM # E-stop has highest priority</p>
-<p>elif self.state == IDLE and start and not stop: self.state = RUN</p>
-<p>elif self.state == RUN and stop: self.state = IDLE</p>
-<p>elif self.state == ALARM and reset: self.state = IDLE # estop already
-released here</p>
-<p>if self.state == RUN and obj and not self.obj_prev and t -
-self.last_obj &gt; 0.05:</p>
-<p>self.count += 1; self.last_obj = t</p>
-<p>self.obj_prev = obj</p>
-<p>return self.state, self.count</p>
-<p>if __name__ == "__main__":</p>
-<p>c = Conveyor; log = []</p>
-<p># (time s, inputs) scripted events: 10 ms steps for 12 s</p>
-<p>objs = [1.0, 2.0, 3.0, 4.0, 5.0, 8.0, 9.0] # object arrival times
-(each lasts 0.36 s; the object at 4.0 s bounces)</p>
-<p>for k in range(1201):</p>
-<p>t = k / 100</p>
-<p>ev = dict(</p>
-<p>start=(0.5 &lt;= t &lt; 0.6), # press START at 0.5 s</p>
-<p>obj=any(a &lt;= t &lt; a + 0.36 for a in objs if a != 4.0) or (4.0
-&lt;= t &lt; 4.01) or (4.02 &lt;= t &lt; 4.36), # object at 4.0 s has
-contact bounce (off 4.01-4.02)</p>
-<p>estop_open=(6.0 &lt;= t &lt; 7.0), # E-stop pressed 6.0-7.0 s</p>
-<p>reset=(7.2 &lt;= t &lt; 7.3), # RESET at 7.2 s</p>
-<p>)</p>
-<p>if 7.5 &lt;= t &lt; 7.6: ev["start"] = True # START again at 7.5
-s</p>
-<p>s, n = c.step(t, **ev); log.append((t, s, n))</p>
-<p>prev = None</p>
-<p>for t, s, n in log:</p>
-<p>if (s, n) != prev: print(f"t={t:5.2f}s state={s:5s} count={n}"); prev
-= (s, n)</p>
-<p>print("final count =", c.count, "(bounce at 4.0 s counted once;
-objects at 8 and 9 s counted after restart)")</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```python
+# sim_conveyor.py : software model of the esp32_conveyor.ino state machine (no hardware needed)
+IDLE, RUN, ALARM = "IDLE", "RUN", "ALARM"
+
+class Conveyor:
+    def __init__(self):
+        self.state, self.count, self.obj_prev, self.last_obj = IDLE, 0, False, -1.0
+    def step(self, t, start=False, stop=False, reset=False, estop_open=False, obj=False):
+        if estop_open: self.state = ALARM                        # E-stop has highest priority
+        elif self.state == IDLE and start and not stop: self.state = RUN
+        elif self.state == RUN and stop: self.state = IDLE
+        elif self.state == ALARM and reset: self.state = IDLE   # estop already released here
+        if self.state == RUN and obj and not self.obj_prev and t - self.last_obj > 0.05:
+            self.count += 1; self.last_obj = t
+        self.obj_prev = obj
+        return self.state, self.count
+
+if __name__ == "__main__":
+    c = Conveyor(); log = []
+    # (time s, inputs) scripted events: 10 ms steps for 12 s
+    objs = [1.0, 2.0, 3.0, 4.0, 5.0, 8.0, 9.0]        # object arrival times (each lasts 0.36 s; the object at 4.0 s bounces)
+    for k in range(1201):
+        t = k / 100
+        ev = dict(
+            start=(0.5 <= t < 0.6),                      # press START at 0.5 s
+            obj=any(a <= t < a + 0.36 for a in objs if a != 4.0) or (4.0 <= t < 4.01) or (4.02 <= t < 4.36),   # object at 4.0 s has contact bounce (off 4.01-4.02)
+            estop_open=(6.0 <= t < 7.0),                 # E-stop pressed 6.0-7.0 s
+            reset=(7.2 <= t < 7.3),                      # RESET at 7.2 s
+        )
+        if 7.5 <= t < 7.6: ev["start"] = True            # START again at 7.5 s
+        s, n = c.step(t, **ev); log.append((t, s, n))
+    prev = None
+    for t, s, n in log:
+        if (s, n) != prev: print(f"t={t:5.2f}s  state={s:5s} count={n}"); prev = (s, n)
+    print("final count =", c.count, "(bounce at 4.0 s counted once; objects at 8 and 9 s counted after restart)")
+```
 
 การตั้งค่าโปรแกรมและตรวจสอบการทำงานมีขั้นตอนดังนี้
 

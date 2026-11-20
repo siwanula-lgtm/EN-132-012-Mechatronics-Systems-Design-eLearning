@@ -380,56 +380,42 @@ Infill 20% กริด และเปิด Support เฉพาะเมื�
 
 **ตารางที่ 3.5 สคริปต์ Python สำหรับประมาณมวล ความยาวเส้นพลาสติก และเวลาพิมพ์ (print_estimator.py)**
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p># print_estimator.py : estimate mass, filament length and print
-time for an FDM part</p>
-<p>import math</p>
-<p>def estimate(volume_cm3, shell_frac=0.55, infill=0.20,</p>
-<p>rho=1.24, # PLA density [g/cm3]</p>
-<p>d_fil=1.75, # filament diameter [mm]</p>
-<p>layer=0.2, width=0.4, speed=50.0, # slicer settings [mm, mm,
-mm/s]</p>
-<p>overhead=0.15): # extra time for travel/heating/retraction (15%)</p>
-<p># effective printed volume = shell + infill portion of the solid
-volume</p>
-<p>v_print_cm3 = volume_cm3 * (shell_frac + (1.0 - shell_frac) *
-infill)</p>
-<p>mass_g = rho * v_print_cm3</p>
-<p>area_mm2 = math.pi * d_fil ** 2 / 4.0 # filament cross-section</p>
-<p>length_m = (v_print_cm3 * 1000.0) / area_mm2 / 1000.0</p>
-<p>q_mm3_s = layer * width * speed # volumetric flow rate</p>
-<p>t_min = (v_print_cm3 * 1000.0) / q_mm3_s / 60.0 * (1.0 +
-overhead)</p>
-<p>return v_print_cm3, mass_g, length_m, q_mm3_s, t_min</p>
-<p>def bending_stress(F_N, L_mm, b_mm, t_mm):</p>
-<p>M = F_N * L_mm # moment [N.mm]</p>
-<p>return 6.0 * M / (b_mm * t_mm ** 2) # stress [MPa]</p>
-<p>if __name__ == "__main__":</p>
-<p>V = float(input("Part volume from SolidWorks [cm3] (example 32.7): ")
-or 32.7)</p>
-<p>v, m, L, Q, t = estimate(V)</p>
-<p>print(f"Printed volume = {v:.2f} cm3")</p>
-<p>print(f"Mass = {m:.1f} g")</p>
-<p>print(f"Filament = {L:.2f} m")</p>
-<p>print(f"Flow rate Q = {Q:.1f} mm3/s")</p>
-<p>print(f"Print time = {t:.0f} min (incl. 15% overhead)")</p>
-<p>s = bending_stress(60, 40, 60, 6)</p>
-<p>print(f"Bending stress = {s:.2f} MPa, FS = {20.0/s:.1f} (sigma_allow
-= 20 MPa)")</p>
-<p># Expected output for V = 32.7 cm3:</p>
-<p># Printed volume = 20.93 cm3 / Mass = 26.0 g / Filament = 8.70 m</p>
-<p># Flow rate Q = 4.0 mm3/s / Print time = 100 min / Bending stress =
-6.67 MPa, FS = 3.0</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+```python
+# print_estimator.py : estimate mass, filament length and print time for an FDM part
+import math
+
+def estimate(volume_cm3, shell_frac=0.55, infill=0.20,
+             rho=1.24,          # PLA density [g/cm3]
+             d_fil=1.75,        # filament diameter [mm]
+             layer=0.2, width=0.4, speed=50.0,   # slicer settings [mm, mm, mm/s]
+             overhead=0.15):    # extra time for travel/heating/retraction (15%)
+    # effective printed volume = shell + infill portion of the solid volume
+    v_print_cm3 = volume_cm3 * (shell_frac + (1.0 - shell_frac) * infill)
+    mass_g = rho * v_print_cm3
+    area_mm2 = math.pi * d_fil ** 2 / 4.0          # filament cross-section
+    length_m = (v_print_cm3 * 1000.0) / area_mm2 / 1000.0
+    q_mm3_s = layer * width * speed                # volumetric flow rate
+    t_min = (v_print_cm3 * 1000.0) / q_mm3_s / 60.0 * (1.0 + overhead)
+    return v_print_cm3, mass_g, length_m, q_mm3_s, t_min
+
+def bending_stress(F_N, L_mm, b_mm, t_mm):
+    M = F_N * L_mm                                  # moment [N.mm]
+    return 6.0 * M / (b_mm * t_mm ** 2)             # stress [MPa]
+
+if __name__ == "__main__":
+    V = float(input("Part volume from SolidWorks [cm3] (example 32.7): ") or 32.7)
+    v, m, L, Q, t = estimate(V)
+    print(f"Printed volume = {v:.2f} cm3")
+    print(f"Mass           = {m:.1f} g")
+    print(f"Filament       = {L:.2f} m")
+    print(f"Flow rate Q    = {Q:.1f} mm3/s")
+    print(f"Print time     = {t:.0f} min (incl. 15% overhead)")
+    s = bending_stress(60, 40, 60, 6)
+    print(f"Bending stress = {s:.2f} MPa, FS = {20.0/s:.1f} (sigma_allow = 20 MPa)")
+# Expected output for V = 32.7 cm3:
+#   Printed volume = 20.93 cm3 / Mass = 26.0 g / Filament = 8.70 m
+#   Flow rate Q = 4.0 mm3/s / Print time = 100 min / Bending stress = 6.67 MPa, FS = 3.0
+```
 
 1\. เปิด Terminal/VS Code รันสคริปต์ Python และเปรียบเทียบผลกับค่าที่สไลเซอร์ประเมิน
 
